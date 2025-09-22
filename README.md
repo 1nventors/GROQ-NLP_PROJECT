@@ -55,8 +55,7 @@ The workflow combines:
 
 - **Python 3.10+**  
 - `groq` Python SDK  
-- `sentence-transformers`  
-- JSON and standard Python libraries  
+- `sentence-transformers`
 
 ---
 
