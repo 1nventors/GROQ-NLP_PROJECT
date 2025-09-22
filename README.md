@@ -1,54 +1,67 @@
-# NLP and Groq Project
+# NLP & Groq Project 🤖📝 (WORKING ON)
 
-This project demonstrates my work with **Natural Language Processing (NLP)** and **Groq API** to automate the generation and validation of programming questions in LaTeX format. The repository focuses on **Python development**, **prompt engineering**, and **semantic validation**.
+This project focuses on **Natural Language Processing (NLP)** and the **Groq API** to automate the **generation and validation of programming questions** in LaTeX format.  
+It explores Python development, prompt engineering, and semantic validation with guidance from Dr. Francisco Zampirolli (UFABC).
 
-## Overview
+---
 
-The project takes a LaTeX-based question about **Object-Oriented Programming (OOP)** and automatically:
+## 📌 Project Overview
 
-1. Generates variations of the question with new class names, attributes, and methods.
-2. Maintains the original format of the question, including input/output examples and test case blocks.
-3. Validates the generated content for **semantic similarity** and **structural correctness**.
+The project takes a LaTeX-based **Object-Oriented Programming (OOP)** question and automatically:
 
-The process integrates:
+- Generates variations with **new class names, attributes, and methods**.  
+- Maintains the **original LaTeX formatting**, including input/output examples and test case blocks.  
+- Validates the generated questions for **semantic similarity** and **structural correctness**.
 
-- **Groq API** for advanced text generation.
-- **Sentence Transformers (`all-MiniLM-L6-v2`)** to calculate semantic similarity.
-- Python for processing, randomization, and test case generation.
+The workflow combines:
 
-## Features & Skills Developed
+- **Groq API** for advanced text generation.  
+- **Sentence Transformers (`all-MiniLM-L6-v2`)** for semantic similarity checks.  
+- Python scripting for processing, randomization, and automated test case generation.  
 
-- **Prompt Engineering**: Designing effective prompts to produce LaTeX-formatted programming questions.
-- **Automated Test Case Generation**: Creating random, realistic test inputs and outputs for OOP exercises.
-- **Semantic Similarity Validation**: Ensuring that generated questions preserve meaning using embedding models.
-- **Structural Validation**: Checking that generated text adheres to expected OOP structures (classes, attributes, methods).
-- **Python Scripting & Automation**: Combining multiple libraries to build a reliable pipeline for content generation.
-- **Version Control Practices**: Managing sensitive API keys and maintaining a clean repository history.
+---
 
-## Challenges Solved
+## 🛠️ Features & Skills Developed
 
-- Maintaining **LaTeX formatting** while generating multiple question variations.
-- Ensuring **semantic integrity**: new questions are different in names but equivalent in meaning.
-- Preventing sensitive information leakage (e.g., API keys) in version control.
-- Integrating multiple models (Groq, Sentence Transformers) for **high-quality content validation**.
+- **Prompt Engineering**: Crafting effective prompts to generate LaTeX-formatted programming questions.  
+- **Automated Test Case Generation**: Producing randomized, realistic test inputs and outputs.  
+- **Semantic Similarity Validation**: Ensuring new questions preserve the meaning of the original.  
+- **Structural Validation**: Checking that outputs respect expected OOP structures (classes, attributes, methods).  
+- **Python Scripting & Automation**: Integrating multiple libraries into a single content generation pipeline.  
+- **Version Control Best Practices**: Handling sensitive API keys safely and keeping a clean repo history.  
 
-## How It Works
+---
 
-1. Define the base OOP question in LaTeX format.
-2. Generate new variations using the **Groq API**.
-3. Validate the output using semantic similarity and structural checks.
-4. Select the best valid output for final use.
-5. Generate test cases for automated evaluation.
+## ⚡ Challenges Solved
 
-## Requirements
+- Maintaining **LaTeX formatting** while generating multiple variations.  
+- Guaranteeing **semantic integrity**: new questions differ in names but are equivalent in meaning.  
+- Preventing **secret leakage** (API keys) in Git history.  
+- Integrating multiple models for **high-quality content validation**.  
 
-- Python 3.10+
-- `groq` Python SDK
-- `sentence-transformers`
-- JSON and standard Python libraries
+---
 
-## Usage
+## 📝 How It Works
 
-```bash
-pip install -r requirements.txt
-python main.py
+1. Define a base OOP question in LaTeX format.  
+2. Generate new question variations via **Groq API**.  
+3. Validate outputs using **semantic similarity** and **structural checks**.  
+4. Select the best valid output for final use.  
+5. Generate test cases for automated evaluation.  
+
+---
+
+## 🖥️ Requirements
+
+- **Python 3.10+**  
+- `groq` Python SDK  
+- `sentence-transformers`  
+- JSON and standard Python libraries  
+
+---
+
+## 🚀 Next Steps
+
+- Expand support for **other OOP concepts** (inheritance, polymorphism, etc.).  
+- Add more advanced **semantic validation checks**.  
+- Build a **web or GUI interface** for interactive question generation.  
