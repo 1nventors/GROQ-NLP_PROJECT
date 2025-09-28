@@ -4,7 +4,7 @@ import os, re
 import time
 
 # initialize clients
-client = Groq(api_key="REMOVED_KEY")
+client = Groq(api_key="GROQ_API_KEY")
 model_embed = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")  # NLP model for semantic similarity
 
 PICK_MODE = "most_similar"  # or "most_different"
