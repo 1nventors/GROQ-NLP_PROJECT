@@ -16,7 +16,7 @@ The project takes a LaTeX-based **Object-Oriented Programming (OOP)** question a
 The workflow combines:
 
 - **Groq API** for advanced text generation.  
-- **Sentence Transformers (`paraphrase-multilingual-MiniLM-L12-v2"`)** for semantic similarity checks.  
+- **Sentence Transformers (`paraphrase-multilingual-MiniLM-L12-v2`)** for semantic similarity checks.  
 - Python scripting for processing, randomization, and automated test case generation.  
 
 ---
@@ -35,7 +35,7 @@ The workflow combines:
 ## ⚡ Challenges Solved
 
 - Maintaining **LaTeX formatting** while generating multiple variations.  
-- Guaranteeing **semantic integrity**: new questions differ in names but are equivalent in meaning.
+- Guaranteeing **semantic integrity**: new questions differ in names but are equivalent in meaning.  
 - Integrating multiple models for **high-quality content validation**.  
 
 ---
@@ -54,12 +54,23 @@ The workflow combines:
 
 - **Python 3.10+**  
 - `groq` Python SDK  
-- `sentence-transformers`
+- `sentence-transformers`  
+- `torch` (required by `sentence-transformers`)  
 
 ---
 
-## 🚀 Next Steps
+## ⚙️ Setup & Installation
 
-- Expand support for **other OOP concepts** (inheritance, polymorphism, etc.).  
-- Add more advanced **semantic validation checks**.  
-- Build a **web or GUI interface** for interactive question generation.  
+1. **Clone the repository**:
+```
+git clone https://github.com/yourusername/nlp-groq-project.git
+cd nlp-groq-project
+```
+
+3. **Install dependencies**:
+```
+pip install --upgrade pip
+pip install groq
+pip install sentence-transformers
+pip install torch
+```
