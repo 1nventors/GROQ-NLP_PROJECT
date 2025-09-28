@@ -63,13 +63,12 @@ The workflow combines:
 
 1. **Clone the repository**:
 ```
-git clone https://github.com/yourusername/nlp-groq-project.git
+git clone https://github.com/1nventors/GROQ-NLP_PROJECT.git
 cd nlp-groq-project
 ```
 
 3. **Install dependencies**:
 ```
-pip install --upgrade pip
 pip install groq
 pip install sentence-transformers
 pip install torch
