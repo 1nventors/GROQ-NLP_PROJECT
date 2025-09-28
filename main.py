@@ -1,12 +1,15 @@
 from groq import Groq
 from sentence_transformers import SentenceTransformer, util
 import os, re
+import time
 
-# inicializa clientes
-client = Groq(api_key="GROQ_API_KEY")
-model_embed = SentenceTransformer("all-MiniLM-L6-v2")  # fast model
+# initialize clients
+client = Groq(api_key="REMOVED_KEY")
+model_embed = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")  # NLP model for semantic similarity
 
-# prompt base
+PICK_MODE = "most_similar"  # or "most_different"
+
+# question prompt
 original_question = r"""
 \textbf{EP2\_3} \textbf{Classe Aluno} — Encapsulamento com Getters e Setters
 
@@ -45,10 +48,6 @@ Sua tarefa é:
 [[def:
 import json
 import random
-
-# Listas de nomes e sobrenomes para gerar nomes de alunos
-nomes_base = ["Ana", "Bruno", "Carla", "Daniel", "Eduarda", "Felipe", "Gabriela", "Hugo", "Isabela", "João"]
-sobrenomes_base = ["Silva", "Santos", "Oliveira", "Souza", "Lima", "Pereira", "Costa", "Rodrigues", "Almeida", "Nunes"]
 
 class Aluno:
     def __init__(self, nome, matricula):
@@ -108,14 +107,14 @@ caso0_out = out_list[0]
 ]]
 """
 
-prompt = f"Reescreva a seguinte questão de POO, mantendo o formato LaTeX, mas usando novos nomes de classe, atributos e métodos. Mantenha os exemplos de entrada/saída e o bloco [[def:...]].:\n\n{original_question}"
+prompt = f"Reescreva do zero a seguinte questão de POO, mantendo o formato LaTeX, mas usando novos nomes de classe, atributos, métodos, adicionando novos desafios e alterando o tema ficticio da questão. Mantenha os exemplos de entrada/saída e o bloco [[def:...]].:\n\n{original_question}"
 
 # call groq API
 def generate_with_model(model_name, prompt):
     response = client.chat.completions.create(
         model=model_name,
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=2000,
+        max_tokens=4000,
         temperature=0.9,
     )
     return response.choices[0].message.content
@@ -132,21 +131,41 @@ def validate_output(original, generated):
 
     return similarity, structure
 
-# generates with both models
-out_llama = generate_with_model("llama-3.1-8b-instant", prompt)
-out_gpt = generate_with_model("openai/gpt-oss-20b", prompt)
 
-# validates
-sim_llama, ok_llama = validate_output(original_question, out_llama)
-sim_gpt, ok_gpt = validate_output(original_question, out_gpt)
+for attempt in range(3):  # tries up to 3 times
+    try: 
+        # generates with both models
+        out_llama = generate_with_model("llama-3.1-8b-instant", prompt)
+        out_gpt = generate_with_model("openai/gpt-oss-20b", prompt)
 
-# chooses the best valid output
-chosen = None
-if ok_llama and (sim_llama >= sim_gpt):
-    chosen = out_llama
-elif ok_gpt:
-    chosen = out_gpt
-else:
-    chosen = "⚠ Nenhuma saída válida, tente gerar novamente."
+        # validates
+        sim_llama, ok_llama = validate_output(original_question, out_llama)
+        sim_gpt, ok_gpt = validate_output(original_question, out_gpt)
 
-print("\nSaída escolhida:\n", chosen)
+         # prints validation details
+        print("\n=== Validação semântica ===")
+        print(f"LLaMA → Similaridade: {sim_llama:.4f}, Estrutura OK: {ok_llama}")
+        print(f"GPT   → Similaridade: {sim_gpt:.4f}, Estrutura OK: {ok_gpt}")
+
+        # chooses the best valid output
+        chosen = None
+        if ok_llama and ok_gpt:
+            if PICK_MODE == "most_similar":
+                chosen = out_llama if sim_llama >= sim_gpt else out_gpt
+            else:
+                chosen = out_llama if sim_llama < sim_gpt else out_gpt
+        elif ok_llama:
+            chosen = out_llama
+        elif ok_gpt:
+            chosen = out_gpt
+        else:
+            chosen = "⚠ Nenhuma saída válida, tente gerar novamente."
+
+        print(f"\n[Modo: {PICK_MODE}]")
+        print("\nSaída escolhida:\n", chosen)
+
+    except Exception as e:
+        print(f"Erro na API para {model_name} (tentativa {attempt + 1}): {e}")
+        if "rate_limit" in str(e).lower():
+            print("Aguardando 45 segundos")
+            time.sleep(45)
