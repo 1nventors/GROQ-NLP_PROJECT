@@ -27,9 +27,8 @@ The workflow combines:
 - **Automated Test Case Generation**: Producing randomized, realistic test inputs and outputs.  
 - **Semantic Similarity Validation**: Ensuring new questions preserve the meaning of the original.  
 - **Structural Validation**: Checking that outputs respect expected OOP structures (classes, attributes, methods).  
-- **Python Scripting & Automation**: Integrating multiple libraries into a single content generation pipeline.  
-- **Version Control Best Practices**: Handling sensitive API keys safely and keeping a clean repo history.  
-
+- **Python Scripting & Automation**: Integrating multiple libraries into a single content generation pipeline.
+  
 ---
 
 ## ⚡ Challenges Solved
