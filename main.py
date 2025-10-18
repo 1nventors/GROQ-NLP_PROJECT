@@ -3,7 +3,6 @@ from sentence_transformers import SentenceTransformer, util
 from dotenv import load_dotenv
 import os, re
 import time
-import random
 
 # initialize clients
 load_dotenv()
