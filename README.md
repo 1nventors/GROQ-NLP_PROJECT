@@ -58,7 +58,7 @@ The **QuestionEvaluator** module generates a **General Score (1-10)** by assigni
 The immediate goal is to finalize the data persistence layer:
 
 - **Data Persistence (Database):** Implement a database connection (e.g., using **SQLite or PostgreSQL**) to save all high-scoring, validated questions for permanent storage and deployment onto the target educational platform.
-- **Using the Database, maybe will have a ML fine-tuning:** 
+- **Using the Database, maybe will have a ML training using fine tuning:** At the start I didn't have plans to do a fine tuning in a LLM to made my own model for exam question generation, but I'm evaluating if it's possible to make one... 
 ---
 
 ## 🖥️ Requirements
