@@ -1,66 +1,70 @@
-# NLP & Groq Project 🤖📝 (WORKING ON)
+# NLP & Groq Question Generation System 🤖📝
 
-This project focuses on **Natural Language Processing (NLP)** and the **Groq API** to automate the **generation and validation of programming questions** in LaTeX format.  
-It explores Python development, prompt engineering, and semantic validation with guidance from Dr. Francisco Zampirolli (UFABC).
+This project develops a robust pipeline for the **automated generation and structured evaluation of programming questions** (specifically focusing on Object-Oriented Programming - OOP), using advanced Large Language Models (LLMs) via the **Groq API** and Natural Language Processing (NLP) techniques.
+
+It serves as the core system for research guided by Dr. Francisco Zampirolli (UFABC) on automated content generation for educational platforms like MCTest and TestCodeAI.
 
 ---
 
 ## 📌 Project Overview
 
-The project takes a LaTeX-based **Object-Oriented Programming (OOP)** question and automatically:
+The system takes a base OOP question in LaTeX format and executes a complete cycle of multi-model generation, comprehensive validation, and intelligent selection.
 
-- Generates variations with **new class names, attributes, and methods**.  
-- Maintains the **original LaTeX formatting**, including input/output examples and test case blocks.  
-- Validates the generated questions for **semantic similarity** and **structural correctness**.
+### Key Advancements:
 
-The workflow combines:
-
-- **Groq API** for advanced text generation.  
-- **Sentence Transformers (`all-MiniLM-L6-v2`)** for semantic similarity checks.  
-- Python scripting for processing, randomization, and automated test case generation.  
+- **Multi-Model Generation Benchmark:** The system tests question generation across various high-speed LLMs to compare output quality.
+- **Weighted Quality Score (1-10):** Implementation of a custom evaluation module (`QuestionEvaluator`) that assigns a final quality score based on a weighted combination of structural, semantic, and syntactic correctness.
+- **Active Code Validation:** Uses Python's Abstract Syntax Tree (`ast` module) to ensure the syntactic validity of generated code blocks within the LaTeX output.
+- **Detailed Reporting:** Automated generation of JSON and TXT reports with all metrics for in-depth analysis and academic reference.
 
 ---
 
-## 🛠️ Features & Skills Developed
+## 🛠️ Features & Technologies
 
-- **Prompt Engineering**: Crafting effective prompts to generate LaTeX-formatted programming questions.  
-- **Automated Test Case Generation**: Producing randomized, realistic test inputs and outputs.  
-- **Semantic Similarity Validation**: Ensuring new questions preserve the meaning of the original.  
-- **Structural Validation**: Checking that outputs respect expected OOP structures (classes, attributes, methods).  
-- **Python Scripting & Automation**: Integrating multiple libraries into a single content generation pipeline.  
-- **Version Control Best Practices**: Handling sensitive API keys safely and keeping a clean repo history.  
+| Category | Features | Core Technologies |
+| :--- | :--- | :--- |
+| **Generation** | Resilient Multi-Model Generation Pipeline | **Groq API**, **llama-3.1-8b-instant**, **gpt-oss-20b**, **kimi-k2-instruct-0905** |
+| **Semantic Validation** | Coherence checks between original and generated questions | `Sentence-Transformers` (`paraphrase-multilingual-MiniLM-L12-v2`), `spaCy` (`pt_core_news_md`) |
+| **Structural Validation**| LaTeX command balance checks, Python code syntax parsing, OOP structure analysis (classes, methods, attributes). | `ast`, Regular Expressions (`re`) |
+| **Automation** | Automated *Test Case* generation based on base question's `[[def:...]]` block. | Python Scripting, `json`, `datetime` |
 
 ---
 
-## ⚡ Challenges Solved
+## 📈 Quality Metrics & Scoring
 
-- Maintaining **LaTeX formatting** while generating multiple variations.  
-- Guaranteeing **semantic integrity**: new questions differ in names but are equivalent in meaning.  
-- Preventing **secret leakage** (API keys) in Git history.  
-- Integrating multiple models for **high-quality content validation**.  
+The **QuestionEvaluator** module generates a **General Score (1-10)** by assigning weights to key validation areas:
+
+| Metric | Tool Used | Weight | Goal |
+| :--- | :--- | :--- | :--- |
+| **Semantic Coherence** | spaCy / Sentence-Transformers | 3 | Ensure the new question maintains the core meaning of the original. |
+| **Python Code Validity** | `ast` module | 3 | Ensure all generated code blocks are syntactically sound. |
+| **LaTeX Integrity** | RegEx | 2 | Verify command balancing (`\begin`, `\end`) and command usage. |
+| **Structural Integrity** | RegEx | 2 | Confirm the presence of key OOP elements (class, def, self). |
 
 ---
 
 ## 📝 How It Works
 
-1. Define a base OOP question in LaTeX format.  
-2. Generate new question variations via **Groq API**.  
-3. Validate outputs using **semantic similarity** and **structural checks**.  
-4. Select the best valid output for final use.  
-5. Generate test cases for automated evaluation.  
+1.  **Input:** A base OOP question in LaTeX format is defined in `main.py`.
+2.  **Generation Loop:** The system iterates through the list of LLMs, generating a variation from each.
+3.  **Evaluation:** Each generated output is passed to the `QuestionEvaluator` for scoring.
+4.  **Selection:** The best valid output is selected based on a pre-defined criterion (`PICK_MODE`: `most_similar` or `most_different`).
+5.  **Reporting:** Detailed metrics and the generated question are saved in structured `.json` and `.txt` files.
 
+---
+
+## 🚀 Next Steps & Future Work
+
+The immediate goal is to finalize the data persistence layer:
+
+- **Data Persistence (Database):** Implement a database connection (e.g., using **SQLite or PostgreSQL**) to save all high-scoring, validated questions for permanent storage and deployment onto the target educational platform.
+- **Using the Database, maybe will have a ML fine-tuning:** 
 ---
 
 ## 🖥️ Requirements
 
-- **Python 3.10+**  
-- `groq` Python SDK  
+- **Python 3.10+**
+- `groq` Python SDK
 - `sentence-transformers`
-
----
-
-## 🚀 Next Steps
-
-- Expand support for **other OOP concepts** (inheritance, polymorphism, etc.).  
-- Add more advanced **semantic validation checks**.  
-- Build a **web or GUI interface** for interactive question generation.  
+- `spacy`
+- **spaCy Model:** `pt_core_news_md` (Install via `python -m spacy download pt_core_news_md`)
