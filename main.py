@@ -1,49 +1,121 @@
 from groq import Groq
 from sentence_transformers import SentenceTransformer, util
 from dotenv import load_dotenv
-import os, re
+import os
+import re
 import time
+import json
+from datetime import datetime
+from evaluation import QuestionEvaluator
 
 # initialize clients
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-model_embed = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")  # NLP model for semantic similarity
+model_embed = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+evaluator = QuestionEvaluator()
 
-PICK_MODE = "most_similar"  # or "most_different"
+PICK_MODE = "most_similar"  # most_simillar or most_different
 
-# question prompt, in that case is a multiple choice question
+# question prompt
 original_question = r"""
-\textbf{Questão de POO — Acesso a atributos privados}
+\textbf{EP2\_3} \textbf{Classe Aluno} — Encapsulamento com Getters e Setters
 
-Considere a seguinte classe em Python:
+Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
 
+Sua tarefa é:
+
+\begin{itemize}[itemsep=2pt, parsep=0pt]
+  \item Criar a classe \textbf{Aluno} com \textbf{atributos privados}: nome e matrícula.
+  \item Utilizar um \textbf{construtor} para inicializar os atributos.
+  \item Criar métodos públicos:
+    \begin{itemize}[itemsep=1pt, parsep=0pt]
+      \item \texttt{getNome()} e \texttt{setNome()} para acessar e modificar o nome.
+      \item \texttt{getMatricula()} apenas para leitura da matrícula.
+      \item \texttt{apresentar\_aluno()} para apresentar os atributos formatados da classe.
+    \end{itemize}
+  \item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
+\end{itemize}
+
+
+\vspace{2mm}\noindent\textbf{Exemplo de Entrada:}\vspace{-2mm}
 \begin{verbatim}
-class Pessoa:
-    def __init__(self, nome, idade):
-        self.__nome = nome
-        self.__idade = idade
-
-    def get_nome(self):
-        return self.__nome
-
-    def set_nome(self, novo_nome):
-        self.__nome = novo_nome
+[[code:caso0_inp]]
 \end{verbatim}
 
-Qual das alternativas abaixo descreve corretamente o que acontece ao tentar acessar \texttt{pessoa.__nome} diretamente?
+\vspace{-2mm}\noindent\textbf{Exemplo de Saída:}\vspace{-2mm}
+\begin{verbatim}
+[[code:caso0_out]]
+\end{verbatim}
 
-\begin{enumerate}
-    \item Acesso direto a \texttt{\_\_nome} não é permitido, pois o atributo é privado. % correta
-    \item O Python permite o acesso e retorna o valor do atributo normalmente.
-    \item O Python lança um erro de sintaxe.
-    \item O Python converte automaticamente \texttt{\_\_nome} em público.
-\end{enumerate}
+\medskip
+
+\begin{comment}
+[[code:moodle_cases]]
+\end{comment}
+
+[[def:
+import json
+import random
+
+class Aluno:
+    def __init__(self, nome, matricula):
+        self.__nome = nome
+        self.__matricula = matricula
+
+    def getNome(self):
+        return self.__nome
+
+    def setNome(self, novo_nome):
+        self.__nome = novo_nome
+
+    def getMatricula(self):
+        return self.__matricula
+
+    def apresentar_aluno(self):
+        return f"Aluno: {self.__nome}, Matrícula: {self.__matricula}"
+
+inp_list, out_list = [], []
+num_test_cases = 10
+
+for i in range(num_test_cases):
+    nome_inicial = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+    matricula_inicial = f"{random.randint(2023, 2025)}{random.randint(100, 999):03d}"
+
+    aluno_teste = Aluno(nome_inicial, matricula_inicial)
+
+    operacao = random.choice(["apresentar", "alterar_nome", "get_matricula"])
+
+    if operacao == "apresentar":
+        entrada = f"{nome_inicial}, {matricula_inicial}; apresentar_aluno()"
+        saida = aluno_teste.apresentar_aluno()
+    elif operacao == "alterar_nome":
+        novo_nome = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+        aluno_teste.setNome(novo_nome)
+        entrada = f"{nome_inicial}, {matricula_inicial}; setNome('{novo_nome}'); apresentar_aluno()"
+        saida = aluno_teste.apresentar_aluno()
+    else:
+        entrada = f"{nome_inicial}, {matricula_inicial}; getMatricula()"
+        saida = aluno_teste.getMatricula()
+
+    inp_list.append(entrada)
+    out_list.append(saida)
+
+cases = {
+    "input": inp_list,
+    "output": out_list
+}
+
+moodle_cases = json.dumps(cases)
+
+caso0_inp = inp_list[0]
+caso0_out = out_list[0]
+]]
+
 
 """
 
 
 def detect_question_type(text):
-    # Se o texto tiver \begin{enumerate} ou \item, consideramos múltipla escolha
     if r"\begin{enumerate}" in text:
         return "QM"
     return "QT"
@@ -51,12 +123,12 @@ def detect_question_type(text):
 
 def generate_prompt(question_text, question_type):
     if question_type == "QT":
-        prompt = f"Reescreva do zero a seguinte questão de POO, mantendo o formato LaTeX, mas usando novos nomes de classe, atributos, métodos, adicionando novos desafios e alterando o tema ficticio da questão. Mantenha os exemplos de entrada/saída e o bloco [[def:...]].:\n\n{original_question}"
+        prompt = f"Reescreva do zero uma questão de POO, mantendo o formato LaTeX, mas usando novos nomes de classe, atributos, métodos, adicionando novos desafios e alterando o tema ficticio da questão. Não gere uma questão parametrizada, gere uma questão nova. Mantenha os exemplos de entrada/saída e o bloco [[def:...]].:\n\n{question_text}"
     if question_type == "QM":
-        prompt = f"Gere uma nova questão de múltipla escolha similar à seguinte, no formato:\nEnunciado...\nAlternativas:\nA: (correta)\nB: (errada)\nC: (errada)\nD: (errada)\n\nQuestão:\n{question_text}"
+        prompt = f"Gere uma nova questão de múltipla escolha no mesmo formato que a seguinte, no formato LaTeX com \\begin{{verbatim}} para código e \\begin{{enumerate}} para alternativas:\n\nQuestão:\n{question_text}"
     return prompt
 
-# call groq API
+
 def generate_with_model(model_name, prompt):
     response = client.chat.completions.create(
         model=model_name,
@@ -66,64 +138,146 @@ def generate_with_model(model_name, prompt):
     )
     return response.choices[0].message.content
 
-# validates the output
+
 def validate_output(original, generated):
-    # 1. sematic similarity
     emb1 = model_embed.encode(original, convert_to_tensor=True)
     emb2 = model_embed.encode(generated, convert_to_tensor=True)
     similarity = util.cos_sim(emb1, emb2).item()
-    print(f"Similaridade semântica, quanto mais próximo de 1, maior similiridade: {similarity:.4f}")
-
-    # 2. structure check
-    structure = bool(re.search(r"Classe|class", generated, re.IGNORECASE)) and bool(re.search(r"atribut", generated, re.IGNORECASE))
-
-    #3. another checks
-    is_qm = bool(re.search(r"A:\s|Alternativas:", generated))
-    is_qt = bool(re.search(r"Classe|atribut", generated, re.IGNORECASE))
-
+    structure = bool(re.search(r"Classe|class", generated, re.IGNORECASE)) and \
+                bool(re.search(r"atribut", generated, re.IGNORECASE))
 
     return similarity, structure
 
-# Detect question type and generate prompt
-question_type = detect_question_type(original_question)
-print(f"[DEBUG] Tipo de questão detectado: {question_type}")
-prompt = generate_prompt(original_question, question_type)
+def save_results(results, filename="resultados_geracao.json"):
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+    print(f"\n[✓] Resultados salvos em: {filename}")
 
 
-for attempt in range(3):  # tries up to 3 times
-    try: 
-        # generates with both models
-        out_llama = generate_with_model("llama-3.1-8b-instant", prompt)
-        out_gpt = generate_with_model("openai/gpt-oss-20b", prompt)
+def main():
+    print("=" * 80)
+    print("SISTEMA DE GERAÇÃO E AVALIAÇÃO DE QUESTÕES POO")
+    print("=" * 80)
+    
+    question_type = detect_question_type(original_question)
+    print(f"\n[DEBUG] Tipo de questão detectado: {question_type}")
+    prompt = generate_prompt(original_question, question_type)
 
-        # validates
-        sim_llama, ok_llama = validate_output(original_question, out_llama)
-        sim_gpt, ok_gpt = validate_output(original_question, out_gpt)
+    MODELS = {
+        "llama": "llama-3.1-8b-instant",
+        "gpt": "openai/gpt-oss-20b",
+        "kimi": "moonshotai/kimi-k2-instruct-0905",
+    }
 
-         # prints validation details
-        print("\n=== Validação semântica ===")
-        print(f"LLaMA → Similaridade: {sim_llama:.4f}, Estrutura OK: {ok_llama}")
-        print(f"GPT   → Similaridade: {sim_gpt:.4f}, Estrutura OK: {ok_gpt}")
+    chosen = None
+    all_evaluations = []
 
-        # chooses the best valid output
-        chosen = None
-        if ok_llama and ok_gpt:
-            if PICK_MODE == "most_similar":
-                chosen = out_llama if sim_llama >= sim_gpt else out_gpt
+    for attempt in range(3):
+        try:
+            results = []
+
+            print(f"\n{'─' * 80}")
+            print(f"TENTATIVA {attempt + 1}")
+            print(f"{'─' * 80}")
+
+            for model_name_key, model_id in MODELS.items():
+                print(f"\nGerando com {model_name_key}...")
+                
+                output = generate_with_model(model_id, prompt)
+                
+                sim, is_structure_ok = validate_output(original_question, output)
+                
+                # spaCy Evaluation
+                print(f"Avaliando com spaCy...")
+                evaluation = evaluator.evaluate_question(original_question, output)
+                
+                results.append({
+                    "name": model_name_key,
+                    "output": output,
+                    "similarity": sim,
+                    "valid": is_structure_ok,
+                    "evaluation": evaluation
+                })
+
+            print(f"\n{'=' * 80}")
+            print("RELATÓRIO DE VALIDAÇÃO RÁPIDA")
+            print(f"{'=' * 80}")
+            for res in results:
+                status = "OK" if res["valid"] else "Estrutura Inválida"
+                score = res["evaluation"]["score_geral"]
+                print(f"{res['name'].capitalize():<10} → Sim: {res['similarity']:.4f} | Score: {score}/10 | {status}")
+
+            # Filter the valid results
+            valid_results = [r for r in results if r["valid"]]
+
+            if not valid_results:
+                print("\n⚠ Nenhuma saída válida nesta tentativa. Tentando novamente...")
+                chosen = None
             else:
-                chosen = out_llama if sim_llama < sim_gpt else out_gpt
-        elif ok_llama:
-            chosen = out_llama
-        elif ok_gpt:
-            chosen = out_gpt
-        else:
-            chosen = "⚠ Nenhuma saída válida, tente gerar novamente."
+                valid_results.sort(key=lambda x: x["similarity"], 
+                                 reverse=(PICK_MODE == "most_similar"))
+                
+                best_result = valid_results[0]
+                chosen = best_result["output"]
+                # Quick report of the winner
+                print(f"\n{'=' * 80}")
+                print(f"VENCEDOR: {best_result['name'].upper()}")
+                print(f"{'=' * 80}")
+                print(f"Similaridade: {best_result['similarity']:.4f}")
+                print(f"Score Geral: {best_result['evaluation']['score_geral']}/10")
+                
+                # Full complete report
+                print(f"\n{evaluator.generate_report(best_result['evaluation'])}")
+                
+                # Shows the chosen question
+                print(f"\n{'=' * 80}")
+                print("QUESTÃO GERADA (VENCEDORA)")
+                print(f"{'=' * 80}")
+                print(chosen)
+                print(f"{'=' * 80}")
+                
+                # Save all evaluations
+                all_evaluations = results
+                break
 
-        print(f"\n[Modo: {PICK_MODE}]")
-        print("\nSaída escolhida:\n", chosen)
+        except Exception as e:
+            print(f"\n Erro na API do Groq(tentativa {attempt + 1}): {e}")
+            if "rate_limit" in str(e).lower():
+                print(" Aguardando 45 segundos...")
+                time.sleep(45)
 
-    except Exception as e:
-        print(f"Erro na API (tentativa {attempt + 1}): {e}")
-        if "rate_limit" in str(e).lower():
-            print("Aguardando 45 segundos")
-            time.sleep(45)
+    # Save final results in JSON
+    if all_evaluations:
+        final_results = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "original_question": original_question,
+            "models_evaluated": len(all_evaluations),
+            "results": [
+                {
+                    "model": r["name"],
+                    "similarity": r["similarity"],
+                    "valid": r["valid"],
+                    "score_geral": r["evaluation"]["score_geral"],
+                    "metricas": r["evaluation"]["metricas"],
+                    "output": r["output"]
+                }
+                for r in all_evaluations
+            ]
+        }
+        save_results(final_results)
+        
+        # Save the detailed report in a text file
+        with open("relatorio_detalhado.txt", 'w', encoding='utf-8') as f:
+            for r in all_evaluations:
+                f.write(f"\n{'=' * 80}\n")
+                f.write(f"MODELO: {r['name'].upper()}\n")
+                f.write(f"{'=' * 80}\n")
+                f.write(evaluator.generate_report(r['evaluation']))
+                f.write(f"\n\nQUESTÃO GERADA:\n{'-' * 80}\n")
+                f.write(r['output'])
+                f.write(f"\n\n")
+        print(f"Relatório detalhado salvo em: relatorio_detalhado.txt")
+
+
+if __name__ == "__main__":
+    main()
