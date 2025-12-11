@@ -34,7 +34,7 @@ class QuestionEvaluator:
         # 4. Estrutural analysis
         results["metricas"].update(self._estructure_analysis(generated_text))
         
-        # 5. General score calculation
+        # 5. General score calculation (1-10)
         results["score_geral"] = self._calculte_score(results["metricas"])
         
         return results
