@@ -2,7 +2,7 @@
 
 This project develops a robust pipeline for the **automated generation and structured evaluation of programming questions** (specifically focusing on Object-Oriented Programming - OOP), using advanced Large Language Models (LLMs) via the **Groq API** and Natural Language Processing (NLP) techniques.
 
-It serves as the core system for research guided by **Dr. Francisco Zampirolli (UFABC)** on automated content generation for educational platforms like MCTest and TestCodeAI.
+It serves as the core system for research guided by **Dr. Francisco Zampirolli (UFABC)** on automated content generation for educational platforms like MCTest(UFABC).
 
 ---
 
