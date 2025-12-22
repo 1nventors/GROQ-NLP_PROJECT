@@ -49,10 +49,10 @@ The **QuestionEvaluator** module generates a **General Score (1-10)** by assigni
 
 To ensure all dependencies (NLP models, libraries, and LaTeX environments) work regardless of the host OS, it is highly recommended to run the project via Docker.
 
-### 1. Build the Image
-Navigate to the project root folder (where the `Dockerfile` is located) and run:
+### 1. Pull the Image from Docker Hub
+You don't need the source code to run the generator. Simply pull the latest image:
 ```bash
-docker build -t gerador-ia-ufabc .
+docker pull 1nventors/gerador-ia-ufabc
 ```
 
 ### 2. Run the Container
