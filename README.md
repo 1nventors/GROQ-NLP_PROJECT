@@ -67,19 +67,19 @@ Note: The -v "$(pwd):/app" flag (Volume) is essential. It synchronizes the conta
 
 The project is currently evolving to include automated asset production and data persistence:
 
-* **Automatic Asset Generation: Implementation of automated generation of UML Class Diagrams (PNG) using Graphviz and Compiled Question Papers (PDF) using internal LaTeX compilers (pdflatex).
-* **Visual Reporting: Development of a dynamic HTML Dashboard to visualize evaluation metrics and generated content in a browser-friendly format.
-* **Data Persistence (Database): Implement a database connection (e.g., SQLite or PostgreSQL) to save all high-scoring, validated questions for permanent storage.
+* **Automatic Asset Generation:** Implementation of automated generation of UML Class Diagrams (PNG) using Graphviz and Compiled Question Papers (PDF) using internal LaTeX compilers (pdflatex).
+* **Visual Reporting:** Development of a dynamic HTML Dashboard to visualize evaluation metrics and generated content in a browser-friendly format.
+* **Data Persistence (Database):** Implement a database connection (e.g., SQLite or PostgreSQL) to save all high-scoring, validated questions for permanent storage.
 
 
 🖥️ Local Requirements (Non-Docker)
 
 If running without Docker, ensure the following are installed:
 
-* **Python 3.10+
-* **Groq
-* **Sentence-Transformers
-* **spaCy model:
+* **Python 3.10+**
+* **Groq**
+* **Sentence-Transformers**
+* **spaCy model:**
 ```bash
 python -m spacy download pt_core_news_md
 ```
