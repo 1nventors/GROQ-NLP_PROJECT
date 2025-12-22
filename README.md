@@ -1,4 +1,4 @@
-# NLP & Groq Question Generation System 🤖📝
+# NLP & Groq Question Generation System 🤖📝 (IN PROGRESS)
 
 This project develops a robust pipeline for the **automated generation and structured evaluation of programming questions** (specifically focusing on Object-Oriented Programming - OOP), using advanced Large Language Models (LLMs) via the **Groq API** and Natural Language Processing (NLP) techniques.
 
@@ -45,7 +45,7 @@ The **QuestionEvaluator** module generates a **General Score (1-10)** by assigni
 
 ---
 
-## 🐳 Running with Docker (Recommended)
+## 🐳 Running with Docker (Recommended/IN PROGRESS)
 
 To ensure all dependencies (NLP models, libraries, and LaTeX environments) work regardless of the host OS, it is highly recommended to run the project via Docker.
 
