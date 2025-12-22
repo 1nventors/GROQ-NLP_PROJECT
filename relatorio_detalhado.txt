@@ -5,24 +5,24 @@ MODELO: LLAMA
 ================================================================================
 RELATÓRIO TÉCNICO DE AVALIAÇÃO DE QUESTÃO
 ================================================================================
-Timestamp: 2025-12-11 16:46:16
+Timestamp: 2025-12-21 21:44:27
 Score Geral: 5.0/10
 
 ────────────────────────────────────────────────────────────────────────────────
 1. ANÁLISE SEMÂNTICA
 ────────────────────────────────────────────────────────────────────────────────
-  Coerência Semântica: 0.9897
+  Coerência Semântica: 0.9914
   Interpretação: Muito Similar (possível cópia da questão original, por favor verifique a saída)
   Tokens Significativos (Original): 282
-  Tokens Significativos (Gerado): 479
-  Razão de Tokens: 1.7
+  Tokens Significativos (Gerado): 393
+  Razão de Tokens: 1.39
 
 ────────────────────────────────────────────────────────────────────────────────
 2. VALIDAÇÃO LaTeX
 ────────────────────────────────────────────────────────────────────────────────
   LaTeX Válido: ✓
   Blocos Balanceados: ✓
-  Total de Comandos LaTeX: 28
+  Total de Comandos LaTeX: 26
 
 ────────────────────────────────────────────────────────────────────────────────
 3. VALIDAÇÃO CÓDIGO PYTHON
@@ -43,28 +43,28 @@ Score Geral: 5.0/10
   Tem Atributos: ✓
   Tem Alternativas: ✓
   Total de Classes: 1
-  Total de Métodos: 9
+  Total de Métodos: 8
 
 ================================================================================
 
 QUESTÃO GERADA:
 --------------------------------------------------------------------------------
-\textbf{EP2\_4} \textbf{Classe Voo} — Encapsulamento com Getters e Setters
+\textbf{EP2\_5} \textbf{Classe Jogador} — Encapsulamento com Getters e Setters
 
-Uma das principais características de uma aplicação de gerenciamento de vôos é a classe \textbf{Voo}, que representa informações sobre um voo em particular. O objetivo desse exercício é implementar a classe \textbf{Voo} com atributos privados e métodos públicos para gerenciar essas informações.
+Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
 
 Sua tarefa é:
 
 \begin{itemize}[itemsep=2pt, parsep=0pt]
-  \item Criar a classe \textbf{Voo} com \textbf{atributos privados}: número do voo, data de partida, data de chegada e aeronave.
+  \item Criar a classe \textbf{Jogador} com \textbf{atributos privados}: nome, pontos e nivel.
   \item Utilizar um \textbf{construtor} para inicializar os atributos.
   \item Criar métodos públicos:
     \begin{itemize}[itemsep=1pt, parsep=0pt]
-      \item \texttt{getNumeroDoVoo()} e \texttt{setNumeroDoVoo()} para acessar e modificar o número do voo.
-      \item \texttt{getDataDePartida()} e \texttt{setDataDePartida()} para acessar e modificar a data de partida.
-      \item \texttt{getDataDeChegada()} e \texttt{setDataDeChegada()} para acessar e modificar a data de chegada.
-      \item \texttt{getAeronave()} apenas para leitura da aeronave.
-      \item \texttt{apresentar\_voo()} para apresentar os atributos formatados da classe.
+      \item \texttt{getNome()} e \texttt{setNome()} para acessar e modificar o nome.
+      \item \texttt{getPontos()} e \texttt{setPontos()} para acessar e modificar os pontos.
+      \item \texttt{getNivel()} apenas para leitura do nível.
+      \item \texttt{avancar_niveis()} para aumentar o nível e calcular pontos adicionais
+      \item \texttt{apresentar\_jogador()} para apresentar os atributos formatados da classe.
     \end{itemize}
   \item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
 \end{itemize}
@@ -88,82 +88,70 @@ Sua tarefa é:
 [[def:
 import json
 import random
-from datetime import datetime, timedelta
 
-class Voo:
-    def __init__(self, numero_do_voo, data_de_partida, data_de_chegada, aeronave):
-        self.__numero_do_voo = numero_do_voo
-        self.__data_de_partida = data_de_partida
-        self.__data_de_chegada = data_de_chegada
-        self.__aeronave = aeronave
+class Jogador:
+    def __init__(self, nome, pontos, nivel):
+        self.__nome = nome
+        self.__pontos = pontos
+        self.__nivel = nivel
 
-    def getNumeroDoVoo(self):
-        return self.__numero_do_voo
+    def getNome(self):
+        return self.__nome
 
-    def setNumeroDoVoo(self, novo_numero):
-        self.__numero_do_voo = novo_numero
+    def setNome(self, novo_nome):
+        self.__nome = novo_nome
 
-    def getDataDePartida(self):
-        return self.__data_de_partida
+    def getPontos(self):
+        return self.__pontos
 
-    def setDataDePartida(self, nova_data):
-        self.__data_de_partida = nova_data
+    def setPontos(self, novos_pontos):
+        self.__pontos = novos_pontos
 
-    def getDataDeChegada(self):
-        return self.__data_de_chegada
+    def getNivel(self):
+        return self.__nivel
 
-    def setDataDeChegada(self, nova_data):
-        self.__data_de_chegada = nova_data
+    def avancar_niveis(self):
+        self.__nivel += 1
+        self.__pontos += self.__nivel * 100
 
-    def getAeronave(self):
-        return self.__aeronave
-
-    def apresentar_voo(self):
-        return f"Voo: {self.__numero_do_voo}, Data de Partida: {self.__data_de_partida}, Data de Chegada: {self.__data_de_chegada}, Aeronave: {self.__aeronave}"
-
-# Gerando dados aleatórios para os testes
-numeros_do_voo = [random.randint(100, 999) for _ in range(10)]
-datas_partition = [(datetime.now() - timedelta(days=random.randint(1, 30))) for _ in range(10)]
-datas_chegada = [(datetime.now() + timedelta(days=random.randint(1, 30))) for _ in range(10)]
-aeronaves = [f"Aeronave {i}" for i in range(1, 11)]
+    def apresentar_jogador(self):
+        return f"Jogador: {self.__nome}, Pontos: {self.__pontos}, Nível: {self.__nivel}"
 
 inp_list, out_list = [], []
 num_test_cases = 10
 
 for i in range(num_test_cases):
-    numero_do_voo_inicial = numeros_do_voo[i]
-    data_de_partida_inicial = datas_partition[i]
-    data_de_chegada_inicial = datas_chegada[i]
-    aeronave_inicial = aeronaves[i]
+    nome_inicial = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+    pontuacao_inicial = random.randint(100, 1000)
+    nivel_inicial = random.randint(1, 10)
 
-    voo_teste = Voo(numero_do_voo_inicial, data_de_partida_inicial, data_de_chegada_inicial, aeronave_inicial)
+    jogador_teste = Jogador(nome_inicial, pontuacao_inicial, nivel_inicial)
 
-    operacao = random.choice(["apresentar", "alterar_numero", "get_aeronave", "alterar_data_partida", "alterar_data_chegada"])
+    operacao = random.choice(["apresentar", "avancar", "alterar_nome", "get_pontos", "alterar_pontos"])
 
     if operacao == "apresentar":
-        entrada = f"{numero_do_voo_inicial}, {data_de_partida_inicial}, {data_de_chegada_inicial}, {aeronave_inicial}; apresentar_voo()"
-        saida = voo_teste.apresentar_voo()
-    elif operacao == "alterar_numero":
-        novo_numero = random.randint(100, 999)
-        voo_teste.setNumeroDoVoo(novo_numero)
-        entrada = f"{numero_do_voo_inicial}, {data_de_partida_inicial}, {data_de_chegada_inicial}, {aeronave_inicial}; setNumeroDoVoo({novo_numero}); apresentar_voo()"
-        saida = voo_teste.apresentar_voo()
-    elif operacao == "get_aeronave":
-        entrada = f"{numero_do_voo_inicial}, {data_de_partida_inicial}, {data_de_chegada_inicial}, {aeronave_inicial}; getAeronave()"
-        saida = voo_teste.getAeronave()
-    elif operacao == "alterar_data_partida":
-        nova_data_partida = datas_partition[i] + timedelta(days=random.randint(-3, 3))
-        voo_teste.setDataDePartida(nova_data_partida)
-        entrada = f"{numero_do_voo_inicial}, {data_de_partida_inicial}, {data_de_chegada_inicial}, {aeronave_inicial}; setDataDePartida('{nova_data_partida}'); apresentar_voo()"
-        saida = voo_teste.apresentar_voo()
-    elif operacao == "alterar_data_chegada":
-        nova_data_chegada = datas_chegada[i] + timedelta(days=random.randint(-3, 3))
-        voo_teste.setDataDeChegada(nova_data_chegada)
-        entrada = f"{numero_do_voo_inicial}, {data_de_partida_inicial}, {data_de_chegada_inicial}, {aeronave_inicial}; setDataDeChegada('{nova_data_chegada}'); apresentar_voo()"
-        saida = voo_teste.apresentar_voo()
+        entrada = f"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; apresentar_jogador()"
+        saida = jogador_teste.apresentar_jogador()
+    elif operacao == "avancar":
+        jogador_teste.avancar_niveis()
+        entrada = f"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; avancar_niveis(); apresentar_jogador()"
+        saida = jogador_teste.apresentar_jogador()
+    elif operacao == "alterar_nome":
+        novo_nome = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+        jogador_teste.setNome(novo_nome)
+        entrada = f"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; setNome('{novo_nome}'); apresentar_jogador()"
+        saida = jogador_teste.apresentar_jogador()
+    elif operacao == "get_pontos":
+        entrada = f"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; getPontos()"
+        saida = jogador_teste.getPontos()
+    else:
+        novo_pontos = random.randint(100, 1000)
+        jogador_teste.setPontos(novo_pontos)
+        entrada = f"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; setPontos({novo_pontos}); apresentar_jogador()"
+        saida = jogador_teste.apresentar_jogador()
 
     inp_list.append(entrada)
-    out_list.append(saida)
+    out_list.append(str(saida))
 
 cases = {
     "input": inp_list,
@@ -176,6 +164,8 @@ caso0_inp = inp_list[0]
 caso0_out = out_list[0]
 ]]
 
+Nota: foi necessário alterar o campo getMatricula() para getNivel() para se ajustar ao novo cenário do problema. Além disso, foi adicionado o método avancar_niveis() que aumenta a pontuação do jogador e também o nível.
+
 
 ================================================================================
 MODELO: GPT
@@ -183,45 +173,35 @@ MODELO: GPT
 ================================================================================
 RELATÓRIO TÉCNICO DE AVALIAÇÃO DE QUESTÃO
 ================================================================================
-Timestamp: 2025-12-11 16:46:22
-Score Geral: 5.0/10
+Timestamp: 2025-12-21 21:44:30
+Score Geral: 3.0/10
 
 ────────────────────────────────────────────────────────────────────────────────
 1. ANÁLISE SEMÂNTICA
 ────────────────────────────────────────────────────────────────────────────────
-  Coerência Semântica: 0.9737
+  Coerência Semântica: 0.9638
   Interpretação: Muito Similar (possível cópia da questão original, por favor verifique a saída)
   Tokens Significativos (Original): 282
-  Tokens Significativos (Gerado): 654
-  Razão de Tokens: 2.32
+  Tokens Significativos (Gerado): 313
+  Razão de Tokens: 1.11
 
 ────────────────────────────────────────────────────────────────────────────────
 2. VALIDAÇÃO LaTeX
 ────────────────────────────────────────────────────────────────────────────────
-  LaTeX Válido: ✓
-  Blocos Balanceados: ✓
-  Total de Comandos LaTeX: 58
+  LaTeX Válido: ✗
+  Blocos Balanceados: ✗
+  Total de Comandos LaTeX: 28
 
 ────────────────────────────────────────────────────────────────────────────────
 3. VALIDAÇÃO CÓDIGO PYTHON
 ────────────────────────────────────────────────────────────────────────────────
   Código Python OK: ✗
-  Blocos de Código: 12
+  Blocos de Código: 2
   Válidos: 0
-  Inválidos: 12
+  Inválidos: 2
   Erros de Sintaxe:
     • Bloco 1: invalid syntax (<unknown>, line 1)
     • Bloco 2: invalid syntax (<unknown>, line 1)
-    • Bloco 3: invalid syntax (<unknown>, line 1)
-    • Bloco 4: invalid syntax (<unknown>, line 1)
-    • Bloco 5: invalid syntax (<unknown>, line 1)
-    • Bloco 6: invalid syntax (<unknown>, line 1)
-    • Bloco 7: invalid syntax (<unknown>, line 1)
-    • Bloco 8: invalid syntax (<unknown>, line 1)
-    • Bloco 9: invalid syntax (<unknown>, line 1)
-    • Bloco 10: invalid syntax (<unknown>, line 1)
-    • Bloco 11: invalid syntax (<unknown>, line 1)
-    • Bloco 12: invalid syntax (<unknown>, line 1)
 
 ────────────────────────────────────────────────────────────────────────────────
 4. ANÁLISE ESTRUTURAL
@@ -237,34 +217,30 @@ Score Geral: 5.0/10
 
 QUESTÃO GERADA:
 --------------------------------------------------------------------------------
-\textbf{EP2\_3} \textbf{Classe Explorador} — Encapsulamento com Getters e Setters  
+\begin{problem}{EP2\_3 – Classe \texttt{Personagem} – Encapsulamento com Getters e Setters}
+\textbf{Tema:} Crie uma classe que modele um personagem de jogo, protegendo seus atributos internos e fornecendo métodos públicos para acessar e modificar esses atributos.
 
-O encapsulamento protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.  
-Nesta tarefa você deverá implementar a classe **Explorador** que representa um viajante que percorre diferentes caminhos.  
+\section*{Enunciado}
+Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
+
+Sua tarefa é:
 
 \begin{itemize}[itemsep=2pt, parsep=0pt]
-  \item Crie a classe \textbf{Explorador} com \textbf{atributos privados}:
-    \begin{itemize}[itemsep=1pt, parsep=0pt]
-      \item \texttt{__nome}
-      \item \texttt{__caminho}
-      \item \texttt{__distancia\_total} (inicializado em 0 km)
-    \end{itemize}
-  \item Utilize um \textbf{construtor} para inicializar \texttt{nome} e \texttt{caminho}.  
-    \texttt{__distancia\_total} deve começar em 0.
-  \item Crie métodos públicos:
-    \begin{itemize}[itemsep=1pt, parsep=0pt]
-      \item \texttt{getNome()} e \texttt{setNome()} para acessar e alterar o nome.
-      \item \texttt{getCaminho()} e \texttt{alterarCaminho()} para acessar e alterar o caminho.
-      \item \texttt{adicionarDistancia(km)} que recebe um número positivo e soma à distância total. Se o valor for não‑positivo, deve lançar \texttt{ValueError}.
-      \item \texttt{getDistanciaTotal()} que retorna a distância total percorrida (em km).
-      \item \texttt{apresentarExplorador()} que devolve a string  
-        \texttt{``Explorador: \_\_nome, Caminho: \_\_caminho, Distância: \_\_distancia\_total km''}.
-    \end{itemize}
-  \item Apresente a saída formatada para cada operação escolhida na entrada de dados, conforme os exemplos abaixo.  
-    O objetivo é que o programa reconheça a chamada do método e imprima exatamente o retorno do método correspondente.  
+    \item Criar a classe \textbf{Personagem} com \textbf{atributos privados}: \texttt{nome}, \texttt{nivel} e \texttt{vida}.
+    \item Utilizar um \textbf{construtor} para inicializar os atributos.
+    \item Criar métodos públicos:
+      \begin{itemize}[itemsep=1pt, parsep=0pt]
+          \item \texttt{getNome()} e \texttt{setNome()} para acessar e modificar o nome.
+          \item \texttt{getNivel()} e \texttt{setNivel()} para acessar e modificar o nível.
+          \item \texttt{getVida()} e \texttt{setVida()} para acessar e modificar a vida.
+          \item \texttt{descrever()} para apresentar os atributos formatados da classe.
+      \end{itemize}
+    \item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
 \end{itemize}
 
-\vspace{2mm}\noindent\textbf{Exemplo de Entrada:}\vspace{-2mm}
+\bigskip
+
+\noindent\textbf{Exemplo de Entrada:}\vspace{-2mm}
 \begin{verbatim}
 [[code:caso0_inp]]
 \end{verbatim}
@@ -282,19 +258,12 @@ Nesta tarefa você deverá implementar a classe **Explorador** que representa um
 
 [[def:
 import json
-import random
 
-# Dados base para geração aleatória
-nomes_base = ["Ana", "Bruno", "Carla", "Diego", "Elisa"]
-sobrenomes_base = ["Silva", "Souza", "Costa", "Lima", "Ribeiro"]
-caminhos_base = ["Floresta Amazônica", "Deserto do Saara", "Montanhas Rochosas",
-                 "Céu Estrelado", "Mar Coral"]
-
-class Explorador:
-    def __init__(self, nome, caminho):
+class Personagem:
+    def __init__(self, nome, nivel, vida):
         self.__nome = nome
-        self.__caminho = caminho
-        self.__distancia_total = 0
+        self.__nivel = nivel
+        self.__vida = vida
 
     def getNome(self):
         return self.__nome
@@ -302,64 +271,37 @@ class Explorador:
     def setNome(self, novo_nome):
         self.__nome = novo_nome
 
-    def getCaminho(self):
-        return self.__caminho
+    def getNivel(self):
+        return self.__nivel
 
-    def alterarCaminho(self, novo_caminho):
-        self.__caminho = novo_caminho
+    def setNivel(self, novo_nivel):
+        self.__nivel = novo_nivel
 
-    def adicionarDistancia(self, km):
-        if km <= 0:
-            raise ValueError("Distância deve ser positiva.")
-        self.__distancia_total += km
+    def getVida(self):
+        return self.__vida
 
-    def getDistanciaTotal(self):
-        return self.__distancia_total
+    def setVida(self, nova_vida):
+        self.__vida = nova_vida
 
-    def apresentarExplorador(self):
-        return (f"Explorador: {self.__nome}, Caminho: {self.__caminho}, "
-                f"Distância: {self.__distancia_total} km")
+    def descrever(self):
+        return f"Personagem: {self.__nome}, Nível: {self.__nivel}, Vida: {self.__vida}"
 
-inp_list, out_list = [], []
-num_test_cases = 10
+# Definição dos casos de teste
+inp_list = [
+    "Arthur, 10, 200; getVida()",
+    "Luna, 3, 150; setNivel(5); descrever()",
+    "Zorg, 8, 80; setNome('Zorg the Destroyer'); descrever()",
+    "Mira, 12, 300; getNome()",
+    "Dora, 7, 120; setVida(90); descrever()"
+]
 
-for i in range(num_test_cases):
-    nome_inicial = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
-    caminho_inicial = random.choice(caminhos_base)
-
-    explorador = Explorador(nome_inicial, caminho_inicial)
-
-    operacao = random.choice(["apresentar", "alterar_nome",
-                              "alterar_caminho", "get_caminho",
-                              "adicionar_distancia"])
-
-    if operacao == "apresentar":
-        entrada = f"{nome_inicial}, {caminho_inicial}; apresentarExplorador()"
-        saida = explorador.apresentarExplorador()
-    elif operacao == "alterar_nome":
-        novo_nome = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
-        explorador.setNome(novo_nome)
-        entrada = (f"{nome_inicial}, {caminho_inicial}; setNome('{novo_nome}'); "
-                   f"apresentarExplorador()")
-        saida = explorador.apresentarExplorador()
-    elif operacao == "alterar_caminho":
-        novo_caminho = random.choice(caminhos_base)
-        explorador.alterarCaminho(novo_caminho)
-        entrada = (f"{nome_inicial}, {caminho_inicial}; alterarCaminho('{novo_caminho}'); "
-                   f"apresentarExplorador()")
-        saida = explorador.apresentarExplorador()
-    elif operacao == "get_caminho":
-        entrada = f"{nome_inicial}, {caminho_inicial}; getCaminho()"
-        saida = explorador.getCaminho()
-    else:  # adicionar_distancia
-        km = random.randint(1, 100)
-        explorador.adicionarDistancia(km)
-        entrada = (f"{nome_inicial}, {caminho_inicial}; adicionarDistancia({km}); "
-                   f"apresentarExplorador()")
-        saida = explorador.apresentarExplorador()
-
-    inp_list.append(entrada)
-    out_list.append(saida)
+out_list = [
+    "200",
+    "Personagem: Luna, Nível: 5, Vida: 150",
+    "Personagem: Zorg the Destroyer, Nível: 8, Vida: 80",
+    "Mira",
+    "Personagem: Dora, Nível: 7, Vida: 90"
+]
 
 cases = {
     "input": inp_list,
@@ -368,68 +310,10 @@ cases = {
 
 moodle_cases = json.dumps(cases)
 
+# Variáveis de exemplo para o enunciado
 caso0_inp = inp_list[0]
 caso0_out = out_list[0]
-]}
-
-\newpage
-
-\textbf{Exemplo de Entrada 1}
-\begin{verbatim}
-Ana Silva, Floresta Amazônica; apresentarExplorador()
-\end{verbatim}
-
-\textbf{Exemplo de Saída 1}
-\begin{verbatim}
-Explorador: Ana Silva, Caminho: Floresta Amazônica, Distância: 0 km
-\end{verbatim}
-
-\textbf{Exemplo de Entrada 2}
-\begin{verbatim}
-Bruno Souza, Deserto do Saara; setNome('Carla Costa'); apresentarExplorador()
-\end{verbatim}
-
-\textbf{Exemplo de Saída 2}
-\begin{verbatim}
-Explorador: Carla Costa, Caminho: Deserto do Saara, Distância: 0 km
-\end{verbatim}
-
-\textbf{Exemplo de Entrada 3}
-\begin{verbatim}
-Diego Costa, Montanhas Rochosas; alterarCaminho('Céu Estrelado'); apresentarExplorador()
-\end{verbatim}
-
-\textbf{Exemplo de Saída 3}
-\begin{verbatim}
-Explorador: Diego Costa, Caminho: Céu Estrelado, Distância: 0 km
-\end{verbatim}
-
-\textbf{Exemplo de Entrada 4}
-\begin{verbatim}
-Elisa Lima, Mar Coral; getCaminho()
-\end{verbatim}
-
-\textbf{Exemplo de Saída 4}
-\begin{verbatim}
-Mar Coral
-\end{verbatim}
-
-\textbf{Exemplo de Entrada 5}
-\begin{verbatim}
-Ana Silva, Floresta Amazônica; adicionarDistancia(45); apresentarExplorador()
-\end{verbatim}
-
-\textbf{Exemplo de Saída 5}
-\begin{verbatim}
-Explorador: Ana Silva, Caminho: Floresta Amazônica, Distância: 45 km
-\end{verbatim}
-
----  
-
-Obs.:  
-- A implementação deve usar atributos privados (nome, caminho e distância total).  
-- Se o método \texttt{adicionarDistancia} receber um valor não‑positivo, ele deve lançar uma \texttt{ValueError}.  
-- Os testes utilizam a sintaxe mostrada nos exemplos; seu programa deve reconhecer a chamada do método e imprimir exatamente o retorno desse método.
+]]
 
 
 ================================================================================
@@ -438,24 +322,24 @@ MODELO: KIMI
 ================================================================================
 RELATÓRIO TÉCNICO DE AVALIAÇÃO DE QUESTÃO
 ================================================================================
-Timestamp: 2025-12-11 16:46:25
+Timestamp: 2025-12-21 21:44:32
 Score Geral: 5.0/10
 
 ────────────────────────────────────────────────────────────────────────────────
 1. ANÁLISE SEMÂNTICA
 ────────────────────────────────────────────────────────────────────────────────
-  Coerência Semântica: 0.983
+  Coerência Semântica: 0.9917
   Interpretação: Muito Similar (possível cópia da questão original, por favor verifique a saída)
   Tokens Significativos (Original): 282
-  Tokens Significativos (Gerado): 385
-  Razão de Tokens: 1.37
+  Tokens Significativos (Gerado): 330
+  Razão de Tokens: 1.17
 
 ────────────────────────────────────────────────────────────────────────────────
 2. VALIDAÇÃO LaTeX
 ────────────────────────────────────────────────────────────────────────────────
   LaTeX Válido: ✓
   Blocos Balanceados: ✓
-  Total de Comandos LaTeX: 27
+  Total de Comandos LaTeX: 23
 
 ────────────────────────────────────────────────────────────────────────────────
 3. VALIDAÇÃO CÓDIGO PYTHON
@@ -482,23 +366,21 @@ Score Geral: 5.0/10
 
 QUESTÃO GERADA:
 --------------------------------------------------------------------------------
-```latex
-\textbf{EP2\_3} \textbf{Classe Drone} — Encapsulamento com Controle de Alcance e Autonomia
+\textbf{EP2\_3} \textbf{Classe NaveEspacial} — Encapsulamento com Getters e Setters
 
 Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
 
 Sua tarefa é:
 
 \begin{itemize}[itemsep=2pt, parsep=0pt]
-  \item Criar a classe \textbf{Drone} com \textbf{atributos privados}: modelo (str) e autonomia\_max (int, em minutos).
+  \item Criar a classe \textbf{NaveEspacial} com \textbf{atributos privados}: codigo (str) e combustivel (float).
   \item Utilizar um \textbf{construtor} para inicializar os atributos.
   \item Criar métodos públicos:
     \begin{itemize}[itemsep=1pt, parsep=0pt]
-      \item \texttt{getModelo()} apenas para leitura.
-      \item \texttt{getAutonomia()} que retorna a autonomia atual (pode ter sido reduzida por voo).
-      \item \texttt{voa(int min)} que decrementa a autonomia e retorna \texttt{True} se ainda houver carga suficiente ou \texttt{False} caso contrário.
-      \item \texttt{recarrega()} que restaura a autonomia ao valor original.
-      \item \texttt{status()} que devolve uma string no formato \\ \texttt{"Modelo: <modelo>, min restantes: <autonomia>"}.
+      \item \texttt{getCodigo()} e \texttt{setCodigo()} para acessar e modificar o código identificador.
+      \item \texttt{getCombustivel()} apenas para leitura do nível de combustível.
+      \item \texttt{abastecer(litros)} para acrescentar combustível (sem ultrapassar 1000 unidades).
+      \item \texttt{status()} para retornar uma string formatada com código e combustível.
     \end{itemize}
   \item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
 \end{itemize}
@@ -524,71 +406,59 @@ Sua tarefa é:
 import json
 import random
 
-class Drone:
-    def __init__(self, modelo: str, autonomia_max: int):
-        self.__modelo = modelo
-        self.__autonomia_max = autonomia_max
-        self.__autonomia_atual = autonomia_max
+class NaveEspacial:
+    def __init__(self, codigo: str, combustivel: float):
+        self.__codigo = codigo
+        self.__combustivel = max(0.0, min(combustivel, 1000.0))
 
-    def getModelo(self) -> str:
-        return self.__modelo
+    def getCodigo(self):
+        return self.__codigo
 
-    def getAutonomia(self) -> int:
-        return self.__autonomia_atual
+    def setCodigo(self, novo_codigo: str):
+        self.__codigo = novo_codigo
 
-    def voa(self, minutos: int) -> bool:
-        if minutos <= self.__autonomia_atual:
-            self.__autonomia_atual -= minutos
-            return True
-        return False
+    def getCombustivel(self):
+        return self.__combustivel
 
-    def recarrega(self):
-        self.__autonomia_atual = self.__autonomia_max
+    def abastecer(self, litros: float):
+        if litros > 0:
+            self.__combustivel = min(self.__combustivel + litros, 1000.0)
 
-    def status(self) -> str:
-        return f"Modelo: {self.__modelo}, min restantes: {self.__autonomia_atual}"
+    def status(self):
+        return f"Nave {self.__codigo} - {self.__combustivel:.1f} L"
 
-modelos_base = ["X-100", "Falcon-Z", "SkyRider", "Alpha7", "NeoBee"]
 inp_list, out_list = [], []
 num_test_cases = 10
 
 for i in range(num_test_cases):
-    mod = random.choice(modelos_base)
-    aut = random.randint(10, 30)
-    d = Drone(mod, aut)
+    codigo_inicial = f"NX-{random.randint(10, 99)}-{random.randint(100, 999)}"
+    comb_inicial = round(random.uniform(100, 900), 1)
 
-    # gera sequência de até 3 comandos
-    seq = []
-    for _ in range(random.randint(1, 3)):
-        cmd = random.choice(["voa", "recarrega", "status"])
-        if cmd == "voa":
-            t = random.randint(5, 15)
-            ok = d.voa(t)
-            seq.append(f"voa({t})")
-            out_list.append(str(ok))
-        elif cmd == "recarrega":
-            d.recarrega()
-            seq.append("recarrega()")
-            out_list.append("recarregado")
-        else:
-            seq.append("status()")
-            out_list.append(d.status())
+    nave = NaveEspacial(codigo_inicial, comb_inicial)
 
-    entrada = f"{mod}, {aut}; " + "; ".join(seq)
+    op = random.choice(["status", "abastecer", "getCodigo", "getCombustivel"])
+
+    if op == "status":
+        entrada = f"{codigo_inicial}, {comb_inicial}; status()"
+        saida = nave.status()
+    elif op == "abastecer":
+        qtd = round(random.uniform(50, 200), 1)
+        nave.abastecer(qtd)
+        entrada = f"{codigo_inicial}, {comb_inicial}; abastecer({qtd}); status()"
+        saida = nave.status()
+    elif op == "getCodigo":
+        entrada = f"{codigo_inicial}, {comb_inicial}; getCodigo()"
+        saida = nave.getCodigo()
+    else:
+        entrada = f"{codigo_inicial}, {comb_inicial}; getCombustivel()"
+        saida = f"{nave.getCombustivel():.1f}"
+
     inp_list.append(entrada)
-
-# garante pelo menos um caso de falta de bateria
-mod = random.choice(modelos_base)
-aut = 5
-d = Drone(mod, aut)
-inp_list.append(f"{mod}, {aut}; voa(10)")
-out_list.append("False")
+    out_list.append(saida)
 
 cases = {"input": inp_list, "output": out_list}
 moodle_cases = json.dumps(cases)
-
 caso0_inp = inp_list[0]
 caso0_out = out_list[0]
 ]]
-```
 

@@ -7,6 +7,7 @@ import time
 import json
 from datetime import datetime
 from evaluation import QuestionEvaluator
+from exporter import QuestionExporter 
 
 # initialize clients
 load_dotenv()
@@ -235,6 +236,10 @@ def main():
                 print(f"{'=' * 80}")
                 print(chosen)
                 print(f"{'=' * 80}")
+
+                exporter = QuestionExporter()
+                exporter.export_mctest_json(chosen, best_result["name"], question_type)
+                exporter.export_vpl_cases(chosen)
                 
                 # Save all evaluations
                 all_evaluations = results
