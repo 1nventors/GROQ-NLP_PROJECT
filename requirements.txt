@@ -3,3 +3,4 @@ sentence-transformers
 spacy
 python-dotenv
 torch --index-url https://download.pytorch.org/whl/cpu
+graphviz

@@ -1,30 +1,20 @@
-case=caso1
-input=André Santos, 506, 8; avancar_niveis(); apresentar_jogador()
-output=Jogador: André Santos, Pontos: 1406, Nível: 9
-case=caso2
-input=Carlos Silva, 814, 5; avancar_niveis(); apresentar_jogador()
-output=Jogador: Carlos Silva, Pontos: 1414, Nível: 6
-case=caso3
-input=Daniela Silva, 947, 5; setPontos(801); apresentar_jogador()
-output=Jogador: Daniela Silva, Pontos: 801, Nível: 5
-case=caso4
-input=Beatriz Santos, 358, 8; apresentar_jogador()
-output=Jogador: Beatriz Santos, Pontos: 358, Nível: 8
-case=caso5
-input=Beatriz Souza, 229, 9; setNome('Daniela Oliveira'); apresentar_jogador()
-output=Jogador: Daniela Oliveira, Pontos: 229, Nível: 9
-case=caso6
-input=André Santos, 675, 3; getPontos()
-output=675
-case=caso7
-input=Beatriz Souza, 870, 6; setNome('Beatriz Silva'); apresentar_jogador()
-output=Jogador: Beatriz Silva, Pontos: 870, Nível: 6
-case=caso8
-input=André Silva, 847, 3; getPontos()
-output=847
-case=caso9
-input=André Silva, 397, 5; setPontos(188); apresentar_jogador()
-output=Jogador: André Silva, Pontos: 188, Nível: 5
-case=caso10
-input=Daniela Silva, 996, 9; setNome('Daniela Silva'); apresentar_jogador()
-output=Jogador: Daniela Silva, Pontos: 996, Nível: 9
+case=case1
+input=OfficeJet 8015, 46; setModelo('OfficeJet 8015'); status_impressora()
+output=Modelo: OfficeJet 8015, Folhas restantes: 46
+
+case=case2
+input=LaserJet Pro, 50; status_impressora()
+output=Modelo: LaserJet Pro, Folhas restantes: 50
+
+case=case3
+input=OfficeJet 8015, 37; setModelo('EcoTank L3150'); status_impressora()
+output=Modelo: EcoTank L3150, Folhas restantes: 37
+
+case=case4
+input=DeskJet 2700, 48; status_impressora()
+output=Modelo: DeskJet 2700, Folhas restantes: 48
+
+case=case5
+input=DeskJet 2700, 30; imprimir(19)
+output=Imprimindo 19 páginas...
+

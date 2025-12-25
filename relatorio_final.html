@@ -1,0 +1,141 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>AI Gen Report</title>
+            <style>
+                body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
+                .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+                .badge { background: #007bff; color: white; padding: 4px 8px; border-radius: 4px; }
+                .score { float: right; background: #f44336; color: white; padding: 10px; border-radius: 50%; width: 40px; height: 40px; text-align: center; line-height: 40px; font-weight: bold; }
+                pre { background: #222; color: #fff; padding: 10px; overflow: auto; border-radius: 5px; white-space: pre-wrap; }
+                .btn { display: inline-block; padding: 10px 15px; margin: 5px; text-decoration: none; color: white; border-radius: 5px; }
+                .pdf { background: #dc3545; } .json { background: #ffc107; color: #000; } .vpl { background: #17a2b8; }
+                .diagram { text-align: center; margin-top: 20px; }
+                .diagram img { max-width: 100%; border: 1px solid #ddd; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <div class="score">5.0</div>
+                <h2>Generation Report</h2>
+                <p>Model: <span class="badge">kimi</span></p>
+                <div>
+                    <a href="questao_oficial.pdf" class="btn pdf">Official PDF</a>
+                    <a href="mctest_import.json" class="btn json">Moodle JSON</a>
+                    <a href="questoes.cases" class="btn vpl">VPL Cases</a>
+                </div>
+
+                <div class="diagram">
+                    <h3>UML Class Diagram</h3>
+                    <img src="diagrama_classes.png" alt="Diagram not generated">
+                </div>
+
+                <h3>Original LaTeX Content</h3>
+                <pre>```latex
+\textbf{EP2\_3} \textbf{Classe Impressora} — Encapsulamento com Getters e Setters
+
+Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
+
+Sua tarefa é:
+
+\begin{itemize}[itemsep=2pt, parsep=0pt]
+\item Criar a classe \textbf{Impressora} com \textbf{atributos privados}: modelo e folhasRestantes.
+\item Utilizar um \textbf{construtor} para inicializar os atributos.
+\item Criar métodos públicos:
+  \begin{itemize}[itemsep=1pt, parsep=0pt]
+    \item \texttt{getModelo()} e \texttt{setModelo()} para acessar e modificar o modelo.
+    \item \texttt{getFolhasRestantes()} apenas para leitura das folhas.
+    \item \texttt{imprimir( paginas )} que reduz as folhas disponíveis e retorna uma mensagem de status.
+    \item \texttt{status\_impressora()} para exibir informações completas.
+  \end{itemize}
+\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
+\end{itemize}
+
+
+\vspace{2mm}\noindent\textbf{Exemplo de Entrada:}\vspace{-2mm}
+\begin{verbatim}
+[[code:caso0_inp]]
+\end{verbatim}
+
+\vspace{-2mm}\noindent\textbf{Exemplo de Saída:}\vspace{-2mm}
+\begin{verbatim}
+[[code:caso0_out]]
+\end{verbatim}
+
+\medskip
+
+\begin{comment}
+[[code:moodle_cases]]
+\end{comment}
+
+[[def:
+import json
+import random
+
+class Impressora:
+    def __init__(self, modelo, folhas):
+        self.__modelo = modelo
+        self.__folhasRestantes = folhas
+
+    def getModelo(self):
+        return self.__modelo
+
+    def setModelo(self, novo_modelo):
+        self.__modelo = novo_modelo
+
+    def getFolhasRestantes(self):
+        return self.__folhasRestantes
+
+    def imprimir(self, paginas):
+        if paginas &lt;= 0:
+            return "Quantidade de páginas inválida."
+        if paginas &gt; self.__folhasRestantes:
+            return "Folhas insuficientes."
+        self.__folhasRestantes -= paginas
+        return f"Imprimindo {paginas} páginas..."
+
+    def status_impressora(self):
+        return f"Modelo: {self.__modelo}, Folhas restantes: {self.__folhasRestantes}"
+
+inp_list, out_list = [], []
+
+modelos = ["LaserJet Pro", "DeskJet 2700", "EcoTank L3150", "Pixma G3020", "OfficeJet 8015"]
+num_test_cases = 5
+
+for i in range(num_test_cases):
+    mod = random.choice(modelos)
+    fol = random.randint(15, 50)
+    imp = Impressora(mod, fol)
+
+    op = random.choice(["status", "imprimir", "mudar_mod", "folhas"])
+    if op == "status":
+        entrada = f"{mod}, {fol}; status_impressora()"
+        saida = imp.status_impressora()
+    elif op == "imprimir":
+        pgs = random.randint(5, 20)
+        entrada = f"{mod}, {fol}; imprimir({pgs})"
+        saida = imp.imprimir(pgs)
+    elif op == "mudar_mod":
+        novo = random.choice(modelos)
+        imp.setModelo(novo)
+        entrada = f"{mod}, {fol}; setModelo('{novo}'); status_impressora()"
+        saida = imp.status_impressora()
+    else:  # folhas
+        entrada = f"{mod}, {fol}; getFolhasRestantes()"
+        saida = imp.getFolhasRestantes()
+
+    inp_list.append(entrada)
+    out_list.append(saida)
+
+cases = {"input": inp_list, "output": out_list}
+moodle_cases = json.dumps(cases)
+caso0_inp = inp_list[0]
+caso0_out = out_list[0]
+]]
+```</pre>
+            </div>
+        </body>
+        </html>
+        

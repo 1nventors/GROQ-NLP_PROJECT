@@ -1,201 +1,25 @@
 {
-  "timestamp": "2025-12-21 21:44:32",
-  "original_question": "\n\\textbf{EP2\\_3} \\textbf{Classe Aluno} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n  \\item Criar a classe \\textbf{Aluno} com \\textbf{atributos privados}: nome e matrícula.\n  \\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n  \\item Criar métodos públicos:\n    \\begin{itemize}[itemsep=1pt, parsep=0pt]\n      \\item \\texttt{getNome()} e \\texttt{setNome()} para acessar e modificar o nome.\n      \\item \\texttt{getMatricula()} apenas para leitura da matrícula.\n      \\item \\texttt{apresentar\\_aluno()} para apresentar os atributos formatados da classe.\n    \\end{itemize}\n  \\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nclass Aluno:\n    def __init__(self, nome, matricula):\n        self.__nome = nome\n        self.__matricula = matricula\n\n    def getNome(self):\n        return self.__nome\n\n    def setNome(self, novo_nome):\n        self.__nome = novo_nome\n\n    def getMatricula(self):\n        return self.__matricula\n\n    def apresentar_aluno(self):\n        return f\"Aluno: {self.__nome}, Matrícula: {self.__matricula}\"\n\ninp_list, out_list = [], []\nnum_test_cases = 10\n\nfor i in range(num_test_cases):\n    nome_inicial = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n    matricula_inicial = f\"{random.randint(2023, 2025)}{random.randint(100, 999):03d}\"\n\n    aluno_teste = Aluno(nome_inicial, matricula_inicial)\n\n    operacao = random.choice([\"apresentar\", \"alterar_nome\", \"get_matricula\"])\n\n    if operacao == \"apresentar\":\n        entrada = f\"{nome_inicial}, {matricula_inicial}; apresentar_aluno()\"\n        saida = aluno_teste.apresentar_aluno()\n    elif operacao == \"alterar_nome\":\n        novo_nome = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n        aluno_teste.setNome(novo_nome)\n        entrada = f\"{nome_inicial}, {matricula_inicial}; setNome('{novo_nome}'); apresentar_aluno()\"\n        saida = aluno_teste.apresentar_aluno()\n    else:\n        entrada = f\"{nome_inicial}, {matricula_inicial}; getMatricula()\"\n        saida = aluno_teste.getMatricula()\n\n    inp_list.append(entrada)\n    out_list.append(saida)\n\ncases = {\n    \"input\": inp_list,\n    \"output\": out_list\n}\n\nmoodle_cases = json.dumps(cases)\n\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]\n\n\n",
+  "timestamp": "2025-12-25 18:29:41",
+  "original_question": "\\textbf{EP2\\_3} \\textbf{Classe Aluno} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n\\item Criar a classe \\textbf{Aluno} com \\textbf{atributos privados}: nome e matrícula.\n\\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n\\item Criar métodos públicos:\n  \\begin{itemize}[itemsep=1pt, parsep=0pt]\n    \\item \\texttt{getNome()} e \\texttt{setNome()} para acessar e modificar o nome.\n    \\item \\texttt{getMatricula()} apenas para leitura da matrícula.\n    \\item \\texttt{apresentar\\_aluno()} para apresentar os atributos formatados da classe.\n  \\end{itemize}\n\\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nclass Aluno:\n    def __init__(self, nome, matricula):\n      self.__nome = nome\n      self.__matricula = matricula\n\n  def getNome(self):\n      return self.__nome\n\n  def setNome(self, novo_nome):\n      self.__nome = novo_nome\n\n  def getMatricula(self):\n      return self.__matricula\n\n  def apresentar_aluno(self):\n      return f\"Aluno: {self.__nome}, Matrícula: {self.__matricula}\"\n\ninp_list, out_list = [], []\nnum_test_cases = 10\n\nfor i in range(num_test_cases):\n  nome_inicial = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n  matricula_inicial = f\"{random.randint(2023, 2025)}{random.randint(100, 999):03d}\"\n\n  aluno_teste = Aluno(nome_inicial, matricula_inicial)\n\n  operacao = random.choice([\"apresentar\", \"alterar_nome\", \"get_matricula\"])\n\n  if operacao == \"apresentar\":\n      entrada = f\"{nome_inicial}, {matricula_inicial}; apresentar_aluno()\"\n      saida = aluno_teste.apresentar_aluno()\n  elif operacao == \"alterar_nome\":\n      novo_nome = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n      aluno_teste.setNome(novo_nome)\n      entrada = f\"{nome_inicial}, {matricula_inicial}; setNome('{novo_nome}'); apresentar_aluno()\"\n      saida = aluno_teste.apresentar_aluno()\n  else:\n      entrada = f\"{nome_inicial}, {matricula_inicial}; getMatricula()\"\n      saida = aluno_teste.getMatricula()\n\n  inp_list.append(entrada)\n  out_list.append(saida)\n\ncases = {\n  \"input\": inp_list,\n  \"output\": out_list\n}\n\nmoodle_cases = json.dumps(cases)\n\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]\n",
   "models_evaluated": 3,
   "results": [
     {
       "model": "llama",
-      "similarity": 0.9935293197631836,
+      "similarity": 0.9488776326179504,
       "valid": true,
-      "score_geral": 5.0,
-      "metricas": {
-        "coerencia_semantica": 0.9914,
-        "interpretacao_similaridade": "Muito Similar (possível cópia da questão original, por favor verifique a saída)",
-        "entidades_originais": [
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "entidades_geradas": [
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "tokens_significativos_original": 282,
-        "tokens_significativos_gerado": 393,
-        "razao_tokens": 1.39,
-        "latex_valido": true,
-        "blocos_balanceados": true,
-        "total_comandos_latex": 26,
-        "blocos_codigo_encontrados": 2,
-        "codigos_validos": 0,
-        "codigos_invalidos": 2,
-        "erros_sintaxe": [
-          {
-            "bloco": 1,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          },
-          {
-            "bloco": 2,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          }
-        ],
-        "codigo_python_ok": false,
-        "tem_classe": true,
-        "tem_metodos": true,
-        "tem_atributos": true,
-        "tem_alternativas": true,
-        "tem_enunciado": true,
-        "tamanho_texto": 4183,
-        "numero_linhas": 116,
-        "classes_encontradas": [
-          "Jogador"
-        ],
-        "metodos_encontrados": [
-          "__init__",
-          "getNome",
-          "setNome",
-          "getPontos",
-          "setPontos",
-          "getNivel",
-          "avancar_niveis",
-          "apresentar_jogador"
-        ],
-        "total_classes": 1,
-        "total_metodos": 8
-      },
-      "output": "\\textbf{EP2\\_5} \\textbf{Classe Jogador} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n  \\item Criar a classe \\textbf{Jogador} com \\textbf{atributos privados}: nome, pontos e nivel.\n  \\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n  \\item Criar métodos públicos:\n    \\begin{itemize}[itemsep=1pt, parsep=0pt]\n      \\item \\texttt{getNome()} e \\texttt{setNome()} para acessar e modificar o nome.\n      \\item \\texttt{getPontos()} e \\texttt{setPontos()} para acessar e modificar os pontos.\n      \\item \\texttt{getNivel()} apenas para leitura do nível.\n      \\item \\texttt{avancar_niveis()} para aumentar o nível e calcular pontos adicionais\n      \\item \\texttt{apresentar\\_jogador()} para apresentar os atributos formatados da classe.\n    \\end{itemize}\n  \\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nclass Jogador:\n    def __init__(self, nome, pontos, nivel):\n        self.__nome = nome\n        self.__pontos = pontos\n        self.__nivel = nivel\n\n    def getNome(self):\n        return self.__nome\n\n    def setNome(self, novo_nome):\n        self.__nome = novo_nome\n\n    def getPontos(self):\n        return self.__pontos\n\n    def setPontos(self, novos_pontos):\n        self.__pontos = novos_pontos\n\n    def getNivel(self):\n        return self.__nivel\n\n    def avancar_niveis(self):\n        self.__nivel += 1\n        self.__pontos += self.__nivel * 100\n\n    def apresentar_jogador(self):\n        return f\"Jogador: {self.__nome}, Pontos: {self.__pontos}, Nível: {self.__nivel}\"\n\ninp_list, out_list = [], []\nnum_test_cases = 10\n\nfor i in range(num_test_cases):\n    nome_inicial = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n    pontuacao_inicial = random.randint(100, 1000)\n    nivel_inicial = random.randint(1, 10)\n\n    jogador_teste = Jogador(nome_inicial, pontuacao_inicial, nivel_inicial)\n\n    operacao = random.choice([\"apresentar\", \"avancar\", \"alterar_nome\", \"get_pontos\", \"alterar_pontos\"])\n\n    if operacao == \"apresentar\":\n        entrada = f\"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; apresentar_jogador()\"\n        saida = jogador_teste.apresentar_jogador()\n    elif operacao == \"avancar\":\n        jogador_teste.avancar_niveis()\n        entrada = f\"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; avancar_niveis(); apresentar_jogador()\"\n        saida = jogador_teste.apresentar_jogador()\n    elif operacao == \"alterar_nome\":\n        novo_nome = f\"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}\"\n        jogador_teste.setNome(novo_nome)\n        entrada = f\"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; setNome('{novo_nome}'); apresentar_jogador()\"\n        saida = jogador_teste.apresentar_jogador()\n    elif operacao == \"get_pontos\":\n        entrada = f\"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; getPontos()\"\n        saida = jogador_teste.getPontos()\n    else:\n        novo_pontos = random.randint(100, 1000)\n        jogador_teste.setPontos(novo_pontos)\n        entrada = f\"{nome_inicial}, {pontuacao_inicial}, {nivel_inicial}; setPontos({novo_pontos}); apresentar_jogador()\"\n        saida = jogador_teste.apresentar_jogador()\n\n    inp_list.append(entrada)\n    out_list.append(str(saida))\n\ncases = {\n    \"input\": inp_list,\n    \"output\": out_list\n}\n\nmoodle_cases = json.dumps(cases)\n\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]\n\nNota: foi necessário alterar o campo getMatricula() para getNivel() para se ajustar ao novo cenário do problema. Além disso, foi adicionado o método avancar_niveis() que aumenta a pontuação do jogador e também o nível."
+      "output": "\\textbf{EP2\\_4} \\textbf{Classe Astronauta} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n\\item Criar a classe \\textbf{Astronauta} com \\textbf{atributos privados}: nome, sobrenome, país de origem e número de missão.\n\\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n\\item Criar métodos públicos:\n  \\begin{itemize}[itemsep=1pt, parsep=0pt]\n    \\item \\texttt{getNome()} e \\texttt{setNome()} para acessar e modificar o nome e sobrenome.\n    \\item \\texttt{getPaísOrigem()} apenas para leitura do país de origem.\n    \\item \\texttt{getNúmeroMissão()} apenas para leitura do número de missão.\n    \\item \\texttt{apresentar\\_astronauta()} para apresentar os atributos formatados da classe.\n  \\end{itemize}\n\\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nnome_base = [\"João\", \"Maria\", \"Pedro\", \"Luiza\", \"Felipe\"]\nsobrenome_base = [\"Silva\", \"Oliveira\", \"Alves\", \"Santos\", \"Rodrigues\"]\npaíses_base = [\"Brasil\", \"EUA\", \"França\", \"Itália\", \"Suíça\"]\nnumeros_base = [100, 200, 300, 400, 500]\n\nclass Astronauta:\n    def __init__(self, nome, sobrenome, país_origem, número_missão):\n      self.__nome = nome\n      self.__sobrenome = sobrenome\n      self.__país_origem = país_origem\n      self.__número_missão = número_missão\n\n  def getNome(self):\n      return self.__nome\n\n  def setNome(self, novo_nome):\n      self.__nome = novo_nome\n      self.__sobrenome = novo_nome.split()[-1]\n\n  def getSobrenome(self):\n      return self.__sobrenome\n\n  def setSobrenome(self, novo_sobrenome):\n      self.__sobrenome = novo_sobrenome\n\n  def getPaísOrigem(self):\n      return self.__país_origem\n\n  def getNúmeroMissão(self):\n      return self.__número_missão\n\n  def apresentar_astronauta(self):\n      return f\"Astronauta: {self.__nome} {self.__sobrenome}, País de Origem: {self.__país_origem}, Número de Missão: {self.__número_missão}\"\n\ninp_list, out_list = [], []\nnum_test_cases = 5\n\nfor i in range(num_test_cases):\n  nome_inicial = f\"{random.choice(nome_base)} {random.choice(sobrenome_base)}\"\n  sobrenome_inicial = nome_inicial.split()[-1]\n  país_origem_inicial = random.choice(países_base)\n  número_missão_inicial = random.choice(numeros_base)\n\n  astronauta_teste = Astronauta(nome_inicial, sobrenome_inicial, país_origem_inicial, número_missão_inicial)\n\n  operacao = random.choice([\"apresentar\", \"alterar_nome\", \"alterar_sobrenome\", \"get_país_origem\", \"get_número_missão\"])\n\n  if operacao == \"apresentar\":\n      entrada = f\"{(nome_inicial}, {sobrenome_inicial}, {país_origem_inicial}, {número_missão_inicial}); apresentar_astronauta()\"\n      saida = astronauta_teste.apresentar_astronauta()\n  elif operacao == \"alterar_nome\":\n      novo_nome = f\"{random.choice(nome_base)} {random.choice(sobrenome_base)}\"\n      astronauta_teste.setNome(novo_nome)\n      entrada = f\"{nome_inicial}, {sobrenome_inicial}, {país_origem_inicial}, {número_missão_inicial}; setNome('{novo_nome}'); apresentar_astronauta()\"\n      saida = astronauta_teste.apresentar_astronauta()\n  elif operacao == \"alterar_sobrenome\":\n      novo_sobrenome = random.choice(sobrenome_base)\n      astronauta_teste.setSobrenome(novo_sobrenome)\n      entrada = f\"{nome_inicial}, {sobrenome_inicial}, {país_origem_inicial}, {número_missão_inicial}; setSobrenome('{novo_sobrenome}'); apresentar_astronauta()\"\n      saida = astronauta_teste.apresentar_astronauta()\n  elif operacao == \"get_país_origem\":\n      entrada = f\"{nome_inicial}, {sobrenome_inicial}, {país_origem_inicial}, {número_missão_inicial}; getPaísOrigem()\"\n      saida = astronauta_teste.getPaísOrigem()\n  else:\n      entrada = f\"{nome_inicial}, {sobrenome_inicial}, {país_origem_inicial}, {número_missão_inicial}; getNúmeroMissão()\"\n      saida = astronauta_teste.getNúmeroMissão()\n\n  inp_list.append(entrada)\n  out_list.append(str(saida).replace(\"\\\\n\", \"\\n\"))\n\ncases = {\n  \"input\": inp_list,\n  \"output\": out_list\n}\n\nmoodle_cases = json.dumps(cases)\n\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]"
     },
     {
       "model": "gpt",
-      "similarity": 0.8013324737548828,
+      "similarity": 0.6680276393890381,
       "valid": true,
-      "score_geral": 3.0,
-      "metricas": {
-        "coerencia_semantica": 0.9638,
-        "interpretacao_similaridade": "Muito Similar (possível cópia da questão original, por favor verifique a saída)",
-        "entidades_originais": [
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "entidades_geradas": [
-          "ORG",
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "tokens_significativos_original": 282,
-        "tokens_significativos_gerado": 313,
-        "razao_tokens": 1.11,
-        "latex_valido": false,
-        "blocos_balanceados": false,
-        "total_comandos_latex": 28,
-        "blocos_codigo_encontrados": 2,
-        "codigos_validos": 0,
-        "codigos_invalidos": 2,
-        "erros_sintaxe": [
-          {
-            "bloco": 1,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          },
-          {
-            "bloco": 2,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          }
-        ],
-        "codigo_python_ok": false,
-        "tem_classe": true,
-        "tem_metodos": true,
-        "tem_atributos": true,
-        "tem_alternativas": true,
-        "tem_enunciado": true,
-        "tamanho_texto": 2873,
-        "numero_linhas": 97,
-        "classes_encontradas": [
-          "Personagem"
-        ],
-        "metodos_encontrados": [
-          "__init__",
-          "getNome",
-          "setNome",
-          "getNivel",
-          "setNivel",
-          "getVida",
-          "setVida",
-          "descrever"
-        ],
-        "total_classes": 1,
-        "total_metodos": 8
-      },
-      "output": "\\begin{problem}{EP2\\_3 – Classe \\texttt{Personagem} – Encapsulamento com Getters e Setters}\n\\textbf{Tema:} Crie uma classe que modele um personagem de jogo, protegendo seus atributos internos e fornecendo métodos públicos para acessar e modificar esses atributos.\n\n\\section*{Enunciado}\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n    \\item Criar a classe \\textbf{Personagem} com \\textbf{atributos privados}: \\texttt{nome}, \\texttt{nivel} e \\texttt{vida}.\n    \\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n    \\item Criar métodos públicos:\n      \\begin{itemize}[itemsep=1pt, parsep=0pt]\n          \\item \\texttt{getNome()} e \\texttt{setNome()} para acessar e modificar o nome.\n          \\item \\texttt{getNivel()} e \\texttt{setNivel()} para acessar e modificar o nível.\n          \\item \\texttt{getVida()} e \\texttt{setVida()} para acessar e modificar a vida.\n          \\item \\texttt{descrever()} para apresentar os atributos formatados da classe.\n      \\end{itemize}\n    \\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\\bigskip\n\n\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\n\nclass Personagem:\n    def __init__(self, nome, nivel, vida):\n        self.__nome = nome\n        self.__nivel = nivel\n        self.__vida = vida\n\n    def getNome(self):\n        return self.__nome\n\n    def setNome(self, novo_nome):\n        self.__nome = novo_nome\n\n    def getNivel(self):\n        return self.__nivel\n\n    def setNivel(self, novo_nivel):\n        self.__nivel = novo_nivel\n\n    def getVida(self):\n        return self.__vida\n\n    def setVida(self, nova_vida):\n        self.__vida = nova_vida\n\n    def descrever(self):\n        return f\"Personagem: {self.__nome}, Nível: {self.__nivel}, Vida: {self.__vida}\"\n\n# Definição dos casos de teste\ninp_list = [\n    \"Arthur, 10, 200; getVida()\",\n    \"Luna, 3, 150; setNivel(5); descrever()\",\n    \"Zorg, 8, 80; setNome('Zorg the Destroyer'); descrever()\",\n    \"Mira, 12, 300; getNome()\",\n    \"Dora, 7, 120; setVida(90); descrever()\"\n]\n\nout_list = [\n    \"200\",\n    \"Personagem: Luna, Nível: 5, Vida: 150\",\n    \"Personagem: Zorg the Destroyer, Nível: 8, Vida: 80\",\n    \"Mira\",\n    \"Personagem: Dora, Nível: 7, Vida: 90\"\n]\n\ncases = {\n    \"input\": inp_list,\n    \"output\": out_list\n}\n\nmoodle_cases = json.dumps(cases)\n\n# Variáveis de exemplo para o enunciado\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]"
+      "output": "\\begin{problem}{EP2\\_3 — Classe \\texttt{Nave} — Encapsulamento e Operações Avançadas}{stdin}{stdout}{2 seconds}{256 megabytes}\n\\textbf{Tema: Navegação Espacial}\n\nEm Programação Orientada a Objetos (POO) o encapsulamento protege os dados internos de um objeto.  Neste problema você deverá criar uma classe que representa uma nave espacial e oferecer alguns métodos públicos que manipulam seus atributos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n  \\item Criar a classe \\textbf{Nave} com \\textbf{atributos privados}: \\texttt{id} (identificador único), \\texttt{tipo} (tipo de nave) e \\texttt{carga} (capacidade de carga em toneladas).\n  \\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n  \\item Implementar os seguintes métodos públicos:\n    \\begin{itemize}[itemsep=1pt, parsep=0pt]\n      \\item \\texttt{getId()} – retorna o identificador.\n      \\item \\texttt{setTipo(novo\\_tipo)} – altera o tipo da nave.\n      \\item \\texttt{getCarga()} – retorna a capacidade de carga.\n      \\item \\texttt{statusNave()} – devolve uma string formatada com o estado atual da nave:  \n        ``Nave \\texttt{id}: Tipo \\texttt{tipo}, Carga \\texttt{carga}``.\n    \\end{itemize}\n  \\item O programa principal receberá uma entrada contendo uma linha que descreve uma operação a ser realizada sobre a nave.  \n    As possíveis operações são:\n    \\begin{enumerate}\n      \\item ``\\<id\\>, \\<tipo\\>, \\<carga\\>; statusNave()'' – cria a nave e imprime seu status.\n      \\item ``\\<id\\>, \\<tipo\\>, \\<carga\\>; setTipo('\\<novo\\_tipo>'); statusNave()'' – cria a nave, altera o tipo e imprime o status.\n      \\item ``\\<id\\>, \\<tipo\\>, \\<carga\\>; getCarga()'' – cria a nave e imprime apenas a capacidade de carga.\n    \\end{enumerate}\n    As respostas devem ser impressas exatamente como a string retornada pelos métodos.\n\\end{itemize}\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json, random\n\nclass Nave:\n    def __init__(self, id, tipo, carga):\n        self.__id = id\n        self.__tipo = tipo\n        self.__carga = carga\n\n    def getId(self):\n        return self.__id\n\n    def setTipo(self, novo_tipo):\n        self.__tipo = novo_tipo\n\n    def getCarga(self):\n        return self.__carga\n\n    def statusNave(self):\n        return f\"Nave {self.__id}: Tipo {self.__tipo}, Carga {self.__carga}\"\n\n# Dados auxiliares para geração aleatória\ntipos_base = [\"Exploradora\", \"Carga\", \"Militar\", \"Resgate\", \"Pesquisa\"]\nnomes_id = [\"NAS-001\", \"NAS-002\", \"NAS-003\", \"NAS-004\", \"NAS-005\"]\ncargas_base = [50, 120, 200, 350, 500]\n\ninp_list, out_list = [], []\nnum_test_cases = 5\n\nfor _ in range(num_test_cases):\n    id_nave = random.choice(nomes_id)\n    tipo_inicial = random.choice(tipos_base)\n    carga_inicial = random.choice(cargas_base)\n    nave_teste = Nave(id_nave, tipo_inicial, carga_inicial)\n\n    operacao = random.choice([\"status\", \"alterar_tipo\", \"get_carga\"])\n\n    if operacao == \"status\":\n        entrada = f\"{id_nave}, {tipo_inicial}, {carga_inicial}; statusNave()\"\n        saida = nave_teste.statusNave()\n    elif operacao == \"alterar_tipo\":\n        novo_tipo = random.choice([t for t in tipos_base if t != tipo_inicial])\n        nave_teste.setTipo(novo_tipo)\n        entrada = f\"{id_nave}, {tipo_inicial}, {carga_inicial}; setTipo('{novo_tipo}'); statusNave()\"\n        saida = nave_teste.statusNave()\n    else:  # get_carga\n        entrada = f\"{id_nave}, {tipo_inicial}, {carga_inicial}; getCarga()\"\n        saida = str(nave_teste.getCarga())\n\n    inp_list.append(entrada)\n    out_list.append(saida)\n\n# Preparação para a plataforma Moodle\ncases = {\n    \"input\": inp_list,\n    \"output\": out_list\n}\nmoodle_cases = json.dumps(cases)\n\n# Exemplo de primeira entrada/saída\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]"
     },
     {
       "model": "kimi",
-      "similarity": 0.9856517314910889,
+      "similarity": 0.958681583404541,
       "valid": true,
-      "score_geral": 5.0,
-      "metricas": {
-        "coerencia_semantica": 0.9917,
-        "interpretacao_similaridade": "Muito Similar (possível cópia da questão original, por favor verifique a saída)",
-        "entidades_originais": [
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "entidades_geradas": [
-          "LOC",
-          "MISC",
-          "PER"
-        ],
-        "tokens_significativos_original": 282,
-        "tokens_significativos_gerado": 330,
-        "razao_tokens": 1.17,
-        "latex_valido": true,
-        "blocos_balanceados": true,
-        "total_comandos_latex": 23,
-        "blocos_codigo_encontrados": 2,
-        "codigos_validos": 0,
-        "codigos_invalidos": 2,
-        "erros_sintaxe": [
-          {
-            "bloco": 1,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          },
-          {
-            "bloco": 2,
-            "erro": "invalid syntax (<unknown>, line 1)",
-            "linha": 1
-          }
-        ],
-        "codigo_python_ok": false,
-        "tem_classe": true,
-        "tem_metodos": true,
-        "tem_atributos": true,
-        "tem_alternativas": true,
-        "tem_enunciado": true,
-        "tamanho_texto": 3167,
-        "numero_linhas": 95,
-        "classes_encontradas": [
-          "NaveEspacial"
-        ],
-        "metodos_encontrados": [
-          "__init__",
-          "getCodigo",
-          "setCodigo",
-          "getCombustivel",
-          "abastecer",
-          "status"
-        ],
-        "total_classes": 1,
-        "total_metodos": 6
-      },
-      "output": "\\textbf{EP2\\_3} \\textbf{Classe NaveEspacial} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n  \\item Criar a classe \\textbf{NaveEspacial} com \\textbf{atributos privados}: codigo (str) e combustivel (float).\n  \\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n  \\item Criar métodos públicos:\n    \\begin{itemize}[itemsep=1pt, parsep=0pt]\n      \\item \\texttt{getCodigo()} e \\texttt{setCodigo()} para acessar e modificar o código identificador.\n      \\item \\texttt{getCombustivel()} apenas para leitura do nível de combustível.\n      \\item \\texttt{abastecer(litros)} para acrescentar combustível (sem ultrapassar 1000 unidades).\n      \\item \\texttt{status()} para retornar uma string formatada com código e combustível.\n    \\end{itemize}\n  \\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nclass NaveEspacial:\n    def __init__(self, codigo: str, combustivel: float):\n        self.__codigo = codigo\n        self.__combustivel = max(0.0, min(combustivel, 1000.0))\n\n    def getCodigo(self):\n        return self.__codigo\n\n    def setCodigo(self, novo_codigo: str):\n        self.__codigo = novo_codigo\n\n    def getCombustivel(self):\n        return self.__combustivel\n\n    def abastecer(self, litros: float):\n        if litros > 0:\n            self.__combustivel = min(self.__combustivel + litros, 1000.0)\n\n    def status(self):\n        return f\"Nave {self.__codigo} - {self.__combustivel:.1f} L\"\n\ninp_list, out_list = [], []\nnum_test_cases = 10\n\nfor i in range(num_test_cases):\n    codigo_inicial = f\"NX-{random.randint(10, 99)}-{random.randint(100, 999)}\"\n    comb_inicial = round(random.uniform(100, 900), 1)\n\n    nave = NaveEspacial(codigo_inicial, comb_inicial)\n\n    op = random.choice([\"status\", \"abastecer\", \"getCodigo\", \"getCombustivel\"])\n\n    if op == \"status\":\n        entrada = f\"{codigo_inicial}, {comb_inicial}; status()\"\n        saida = nave.status()\n    elif op == \"abastecer\":\n        qtd = round(random.uniform(50, 200), 1)\n        nave.abastecer(qtd)\n        entrada = f\"{codigo_inicial}, {comb_inicial}; abastecer({qtd}); status()\"\n        saida = nave.status()\n    elif op == \"getCodigo\":\n        entrada = f\"{codigo_inicial}, {comb_inicial}; getCodigo()\"\n        saida = nave.getCodigo()\n    else:\n        entrada = f\"{codigo_inicial}, {comb_inicial}; getCombustivel()\"\n        saida = f\"{nave.getCombustivel():.1f}\"\n\n    inp_list.append(entrada)\n    out_list.append(saida)\n\ncases = {\"input\": inp_list, \"output\": out_list}\nmoodle_cases = json.dumps(cases)\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]"
+      "output": "```latex\n\\textbf{EP2\\_3} \\textbf{Classe Impressora} — Encapsulamento com Getters e Setters\n\nUm dos pilares da Programação Orientada a Objetos (POO) é o \\textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.\n\nSua tarefa é:\n\n\\begin{itemize}[itemsep=2pt, parsep=0pt]\n\\item Criar a classe \\textbf{Impressora} com \\textbf{atributos privados}: modelo e folhasRestantes.\n\\item Utilizar um \\textbf{construtor} para inicializar os atributos.\n\\item Criar métodos públicos:\n  \\begin{itemize}[itemsep=1pt, parsep=0pt]\n    \\item \\texttt{getModelo()} e \\texttt{setModelo()} para acessar e modificar o modelo.\n    \\item \\texttt{getFolhasRestantes()} apenas para leitura das folhas.\n    \\item \\texttt{imprimir( paginas )} que reduz as folhas disponíveis e retorna uma mensagem de status.\n    \\item \\texttt{status\\_impressora()} para exibir informações completas.\n  \\end{itemize}\n\\item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.\n\\end{itemize}\n\n\n\\vspace{2mm}\\noindent\\textbf{Exemplo de Entrada:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_inp]]\n\\end{verbatim}\n\n\\vspace{-2mm}\\noindent\\textbf{Exemplo de Saída:}\\vspace{-2mm}\n\\begin{verbatim}\n[[code:caso0_out]]\n\\end{verbatim}\n\n\\medskip\n\n\\begin{comment}\n[[code:moodle_cases]]\n\\end{comment}\n\n[[def:\nimport json\nimport random\n\nclass Impressora:\n    def __init__(self, modelo, folhas):\n        self.__modelo = modelo\n        self.__folhasRestantes = folhas\n\n    def getModelo(self):\n        return self.__modelo\n\n    def setModelo(self, novo_modelo):\n        self.__modelo = novo_modelo\n\n    def getFolhasRestantes(self):\n        return self.__folhasRestantes\n\n    def imprimir(self, paginas):\n        if paginas <= 0:\n            return \"Quantidade de páginas inválida.\"\n        if paginas > self.__folhasRestantes:\n            return \"Folhas insuficientes.\"\n        self.__folhasRestantes -= paginas\n        return f\"Imprimindo {paginas} páginas...\"\n\n    def status_impressora(self):\n        return f\"Modelo: {self.__modelo}, Folhas restantes: {self.__folhasRestantes}\"\n\ninp_list, out_list = [], []\n\nmodelos = [\"LaserJet Pro\", \"DeskJet 2700\", \"EcoTank L3150\", \"Pixma G3020\", \"OfficeJet 8015\"]\nnum_test_cases = 5\n\nfor i in range(num_test_cases):\n    mod = random.choice(modelos)\n    fol = random.randint(15, 50)\n    imp = Impressora(mod, fol)\n\n    op = random.choice([\"status\", \"imprimir\", \"mudar_mod\", \"folhas\"])\n    if op == \"status\":\n        entrada = f\"{mod}, {fol}; status_impressora()\"\n        saida = imp.status_impressora()\n    elif op == \"imprimir\":\n        pgs = random.randint(5, 20)\n        entrada = f\"{mod}, {fol}; imprimir({pgs})\"\n        saida = imp.imprimir(pgs)\n    elif op == \"mudar_mod\":\n        novo = random.choice(modelos)\n        imp.setModelo(novo)\n        entrada = f\"{mod}, {fol}; setModelo('{novo}'); status_impressora()\"\n        saida = imp.status_impressora()\n    else:  # folhas\n        entrada = f\"{mod}, {fol}; getFolhasRestantes()\"\n        saida = imp.getFolhasRestantes()\n\n    inp_list.append(entrada)\n    out_list.append(saida)\n\ncases = {\"input\": inp_list, \"output\": out_list}\nmoodle_cases = json.dumps(cases)\ncaso0_inp = inp_list[0]\ncaso0_out = out_list[0]\n]]\n```"
     }
   ]
 }

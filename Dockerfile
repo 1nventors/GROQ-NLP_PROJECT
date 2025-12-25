@@ -9,6 +9,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    graphviz \
+    texlive-latex-base \
+    texlive-latex-extra \
     && rm -rf /var/lib/apt/lists/*
 
 # Atualiza o pip
