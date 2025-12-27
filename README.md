@@ -1,85 +1,85 @@
-# NLP & Groq Question Generation System 🤖📝 (IN PROGRESS)
+# NLP & Groq Question Generation System 🤖📝
 
-This project develops a robust pipeline for the **automated generation and structured evaluation of programming questions** (specifically focusing on Object-Oriented Programming - OOP), using advanced Large Language Models (LLMs) via the **Groq API** and Natural Language Processing (NLP) techniques.
+This project is a high-performance pipeline for the **automated generation, evaluation, and exporting of programming questions** (specifically Object-Oriented Programming - OOP). It leverages multiple Large Language Models (LLMs) via the **Groq API** and NLP techniques to ensure educational quality and technical accuracy.
 
-It serves as the core system for research guided by **Dr. Francisco Zampirolli (UFABC)** on automated content generation for educational platforms like MCTest(UFABC).
+Developed for research guided by **Dr. Francisco Zampirolli (UFABC)** to support educational platforms like **MCTest** and **VPL**.
 
 ---
 
 ## 📌 Project Overview
 
-The system takes a base OOP question in LaTeX format and executes a complete cycle of multi-model generation, comprehensive validation, and intelligent selection. 
+The system takes an original OOP question (Open-Ended or Multiple Choice) in LaTeX, generates new versions using different LLMs, evaluates them using `spaCy` and semantic similarity, and selects the best candidate based on a weighted scoring system.
 
-
-
-### Key Advancements:
-
-* **Multi-Model Generation Benchmark:** The system tests question generation across various high-speed LLMs to compare output quality.
-* **Weighted Quality Score (1-10):** Implementation of a custom evaluation module (`QuestionEvaluator`) that assigns a final quality score based on a weighted combination of structural, semantic, and syntactic correctness.
-* **Active Code Validation:** Uses Python's Abstract Syntax Tree (`ast` module) to ensure the syntactic validity of generated code blocks within the LaTeX output.
-* **Automated Exporting:** Generates structured `.json` for MCTest and `.cases` for VPL (Virtual Programming Lab) automatically.
+### 🚀 Key Features
+* **Multi-Model Tournament:** Compares outputs from Llama 3.1, GPT-OSS, and Kimi in real-time.
+* **Automatic Asset Generation:**
+    * **PDF:** Compiled via `pdflatex` (automatically hiding validation blocks).
+    * **UML:** Class diagrams generated via **Graphviz**.
+    * **HTML Report:** Visual dashboard for analyzing the generation quality.
+* **Active Code Validation:** Executes generated Python code in a sandbox to ensure `inp_list` and `out_list` are correctly defined.
+* **Moodle-Ready:** Exports `.json` for MCTest and `.cases` for VPL.
 
 ---
 
-## 🛠️ Features & Technologies
+## 🛠️ System Architecture
 
-| Category | Features | Core Technologies |
-| :--- | :--- | :--- |
-| **Generation** | Resilient Multi-Model Generation Pipeline | **Groq API**, Llama 3.1, GPT-OSS, Kimi |
-| **Semantic Validation** | Coherence checks between original and generated questions | `Sentence-Transformers`, `spaCy` (`pt_core_news_md`) |
-| **Structural Validation**| LaTeX command balance checks and OOP structure analysis. | `ast` module, Regular Expressions (`re`) |
-| **Automation** | Automated *Test Case* generation based on `[[def:...]]` blocks. | Python Scripting, `json`, `datetime` |
+| Module | Responsibility |
+| :--- | :--- |
+| `main.py` | Orchestrates generation attempts, model comparison, and selection logic. |
+| `exporter.py` | Handles Python context extraction, UML rendering, and PDF compilation. |
+| `evaluation.py` | Assigns a 1-10 quality score based on NLP and structural metrics. |
+| `html_view.py` | Generates a final web-based report for user visualization. |
 
 ---
 
 ## 📈 Quality Metrics & Scoring
 
-The **QuestionEvaluator** module generates a **General Score (1-10)** by assigning weights to key validation areas:
+The **QuestionEvaluator** assigns a **General Score (1-10)** by analyzing:
 
 | Metric | Weight | Goal |
 | :--- | :--- | :--- |
-| **Semantic Coherence** | 3 | Ensure the new question maintains the core educational meaning. |
-| **Python Code Validity** | 3 | Ensure all generated code blocks are syntactically sound. |
-| **LaTeX Integrity** | 2 | Verify command balancing (`\begin`, `\end`) and command usage. |
-| **Structural Integrity** | 2 | Confirm the presence of key OOP elements (class, def, self). |
+| **Semantic Coherence** | 30% | Meaning consistency using `Sentence-Transformers`. |
+| **Python Code Validity** | 30% | Executional integrity of the `[[def:...]]` validation script. |
+| **LaTeX Integrity** | 20% | Correct tag balancing and syntax for math/code blocks. |
+| **OOP Structure** | 20% | Presence and correctness of classes, attributes, and methods. |
 
 ---
 
-## 🐳 Running with Docker (Recommended/IN PROGRESS)
+## 🐳 Running with Docker
 
-To ensure all dependencies (NLP models, libraries, and LaTeX environments) work regardless of the host OS, it is highly recommended to run the project via Docker.
+Running via Docker is highly recommended to avoid local dependency issues with LaTeX and Graphviz.
 
-### 1. Pull the Image from Docker Hub
-You don't need the source code to run the generator. Simply pull the latest image:
+### 1. Execute the Generation
+Run the container and provide your **Groq API Key**. Replace `my_test_session` with any name you prefer:
 ```bash
-docker pull 1nventors/gerador-ia-ufabc
+docker run --name my_test_session -it -e GROQ_API_KEY="YOUR_KEY_HERE" gerador-ia-ufabc
+```
+### 2. Copy the Results
+After the script finishes, copy all generated files (PDF, JSON, PNG, HTML) to your current local directory:
+```bash
+docker cp my_test_session:/app/. .
+```
+### 3. Cleanup
+Remove the container to free up resources and prepare for the next run:
+```bash
+docker rm my_test_session
 ```
 
-### 2. Run the Container
-You can pass your Groq API Key directly as an environment variable. This avoids the need for a local .env file and allows different users to use their own keys:
-```bash
-docker run -it --rm -e GROQ_API_KEY="your_api_key_here" -v "$(pwd):/app" gerador-ia-ufabc
-```
+---
 
-Note: The -v "$(pwd):/app" flag (Volume) is essential. It synchronizes the container's output with your local folder, allowing the generated .json, .cases, and reports to appear on your machine instantly.
+## ⚙️ Configuration (models&question_config.yaml)
+### You can customize the generation behavior:
+* **attempts:** Number of retries (default: 3) if models fail code validation.
+* **pick_mode:** Use most_similar to stay close to the original or least_similar for more creative variations.
+* **original_question:** Paste your base LaTeX question here to start a new generation.
 
-### 🚀 Next Steps & Future Work
+---
 
-The project is currently evolving to include automated asset production and data persistence:
-
-* **Automatic Asset Generation:** Implementation of automated generation of UML Class Diagrams (PNG) using Graphviz and Compiled Question Papers (PDF) using internal LaTeX compilers (pdflatex).
-* **Visual Reporting:** Development of a dynamic HTML Dashboard to visualize evaluation metrics and generated content in a browser-friendly format.
-* **Data Persistence (Database):** Implement a database connection (e.g., SQLite or PostgreSQL) to save all high-scoring, validated questions for permanent storage.
-
-
-🖥️ Local Requirements (Non-Docker)
-
-If running without Docker, ensure the following are installed:
-
+## 🖥️ Local Requirements (Non-Docker)
+### If running natively, ensure you have:
 * **Python 3.10+**
-* **Groq**
-* **Sentence-Transformers**
-* **spaCy model:**
-```bash
-python -m spacy download pt_core_news_md
-```
+* **TexLive / pdflatex installed and in your PATH.**
+* **Graphviz installed.**
+* **spaCy Model: python -m spacy download pt_core_news_md**
+
+### You can download all necessary packages directly by the requiriments.txt
