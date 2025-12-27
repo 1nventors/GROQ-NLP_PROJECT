@@ -82,4 +82,4 @@ docker rm my_test_session
 * **Graphviz installed.**
 * **spaCy Model: python -m spacy download pt_core_news_md**
 
-### You can download all necessary packages directly by the requiriments.txt
+### You can download all necessary packages directly by the requirements.txt
