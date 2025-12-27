@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="score">5.0</div>
                 <h2>Generation Report</h2>
-                <p>Model: <span class="badge">kimi</span></p>
+                <p>Model: <span class="badge">llama</span></p>
                 <div>
                     <a href="questao_oficial.pdf" class="btn pdf">Official PDF</a>
                     <a href="mctest_import.json" class="btn json">Moodle JSON</a>
@@ -33,26 +33,25 @@
                 </div>
 
                 <h3>Original LaTeX Content</h3>
-                <pre>```latex
-\textbf{EP2\_3} \textbf{Classe Impressora} — Encapsulamento com Getters e Setters
+                <pre>\textbf{EP2\_3} \textbf{Classe Jovem\_Cientista} — Encapsulamento com Getters e Setters
 
 Um dos pilares da Programação Orientada a Objetos (POO) é o \textbf{encapsulamento}, que protege os dados internos de um objeto e controla seu acesso por meio de métodos públicos.
 
 Sua tarefa é:
 
 \begin{itemize}[itemsep=2pt, parsep=0pt]
-\item Criar a classe \textbf{Impressora} com \textbf{atributos privados}: modelo e folhasRestantes.
+\item Criar a classe \textbf{Jovem\_Cientista} com \textbf{atributos privados}: nome, idade e área\_de\_interesse.
 \item Utilizar um \textbf{construtor} para inicializar os atributos.
 \item Criar métodos públicos:
   \begin{itemize}[itemsep=1pt, parsep=0pt]
-    \item \texttt{getModelo()} e \texttt{setModelo()} para acessar e modificar o modelo.
-    \item \texttt{getFolhasRestantes()} apenas para leitura das folhas.
-    \item \texttt{imprimir( paginas )} que reduz as folhas disponíveis e retorna uma mensagem de status.
-    \item \texttt{status\_impressora()} para exibir informações completas.
+    \item \texttt{getNome()} e \texttt{setNome()} para acessar e modificar o nome.
+    \item \texttt{getIdade()} e \texttt{setIdade()} para acessar e modificar a idade.
+    \item \texttt{getAreaDeInteresse()} apenas para leitura da área de interesse.
+    \item \texttt{apresentar\_jovem\_cientista()} para apresentar os atributos formatados da classe.
+    \item \texttt{obter\_area\_de\_interesse()} para retornar a área de interesse como string.
   \end{itemize}
 \item Apresentar a saída formatada para cada método escolhido na entrada de dados, conforme exemplo a seguir.
 \end{itemize}
-
 
 \vspace{2mm}\noindent\textbf{Exemplo de Entrada:}\vspace{-2mm}
 \begin{verbatim}
@@ -74,67 +73,95 @@ Sua tarefa é:
 import json
 import random
 
-class Impressora:
-    def __init__(self, modelo, folhas):
-        self.__modelo = modelo
-        self.__folhasRestantes = folhas
+class Jovem_Cientista:
+  def __init__(self, nome, idade, area_de_interesse):
+      self.__nome = nome
+      self.__idade = idade
+      self.__area_de_interesse = area_de_interesse
 
-    def getModelo(self):
-        return self.__modelo
+  def getNome(self):
+      return self.__nome
 
-    def setModelo(self, novo_modelo):
-        self.__modelo = novo_modelo
+  def setNome(self, novo_nome):
+      self.__nome = novo_nome
 
-    def getFolhasRestantes(self):
-        return self.__folhasRestantes
+  def getIdade(self):
+      return self.__idade
 
-    def imprimir(self, paginas):
-        if paginas &lt;= 0:
-            return "Quantidade de páginas inválida."
-        if paginas &gt; self.__folhasRestantes:
-            return "Folhas insuficientes."
-        self.__folhasRestantes -= paginas
-        return f"Imprimindo {paginas} páginas..."
+  def setIdade(self, nova_idade):
+      if nova_idade &gt;= 13 and nova_idade &lt;= 20:
+          self.__idade = nova_idade
+      else:
+          raise ValueError("Idade deve estar entre 13 e 20")
 
-    def status_impressora(self):
-        return f"Modelo: {self.__modelo}, Folhas restantes: {self.__folhasRestantes}"
+  def getAreaDeInteresse(self):
+      return self.__area_de_interesse
+
+  def obter_area_de_interesse(self):
+      area_interesse_enum = {
+          "Ciência\_Computacional": "Algoritmos",
+          "Física": "Eletromagnetismo",
+          "Biologia": "Evolução",
+          "Matemática": "Geometria",
+          "Química": "Reações Quimicas"
+      }
+      return area_interesse_enum.get(self.__area_de_interesse)
+
+  def apresentar_jovem_cientista(self):
+      return f"Nome: {self.__nome}, Idade: {self.__idade}, Área de Interesse: {self.__area_de_interesse}"
 
 inp_list, out_list = [], []
-
-modelos = ["LaserJet Pro", "DeskJet 2700", "EcoTank L3150", "Pixma G3020", "OfficeJet 8015"]
 num_test_cases = 5
 
+nomes_base = ["João", "Maria", "Pedro", "Luís", "Ana"]
+sobrenomes_base = ["Silva", "Andrade", "Martins", "Costa", "Souza"]
+areas_interesse_base = ["Ciência\_Computacional", "Física", "Biologia", "Matemática", "Química"]
+
 for i in range(num_test_cases):
-    mod = random.choice(modelos)
-    fol = random.randint(15, 50)
-    imp = Impressora(mod, fol)
+  nome_inicial = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+  idade_inicial = random.randint(13, 20)
+  area_interesse_inicial = random.choice(areas_interesse_base)
 
-    op = random.choice(["status", "imprimir", "mudar_mod", "folhas"])
-    if op == "status":
-        entrada = f"{mod}, {fol}; status_impressora()"
-        saida = imp.status_impressora()
-    elif op == "imprimir":
-        pgs = random.randint(5, 20)
-        entrada = f"{mod}, {fol}; imprimir({pgs})"
-        saida = imp.imprimir(pgs)
-    elif op == "mudar_mod":
-        novo = random.choice(modelos)
-        imp.setModelo(novo)
-        entrada = f"{mod}, {fol}; setModelo('{novo}'); status_impressora()"
-        saida = imp.status_impressora()
-    else:  # folhas
-        entrada = f"{mod}, {fol}; getFolhasRestantes()"
-        saida = imp.getFolhasRestantes()
+  aluno_teste = Jovem_Cientista(nome_inicial, idade_inicial, area_interesse_inicial)
 
-    inp_list.append(entrada)
-    out_list.append(saida)
+  operacao = random.choice(["apresentar", "alterar_nome", "get_idade", "set_idade", "get_area_de_interesse", "obter_area_de_interesse"])
 
-cases = {"input": inp_list, "output": out_list}
+  if operacao == "apresentar":
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; apresentar_jovem_cientista()"
+      saida = aluno_teste.apresentar_jovem_cientista()
+  elif operacao == "alterar_nome":
+      novo_nome = f"{random.choice(nomes_base)} {random.choice(sobrenomes_base)}"
+      aluno_teste.setNome(novo_nome)
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; setNome('{novo_nome}'); apresentar_jovem_cientista()"
+      saida = aluno_teste.apresentar_jovem_cientista()
+  elif operacao == "get_idade":
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; getNome()"
+      saida = str(aluno_teste.getIdade())
+  elif operacao == "set_idade":
+      nova_idade = random.randint(13, 20)
+      aluno_teste.setIdade(nova_idade)
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; setIdade({nova_idade}); apresentar_jovem_cientista()"
+      saida = aluno_teste.apresentar_jovem_cientista()
+  elif operacao == "get_area_de_interesse":
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; getNome()"
+      saida = aluno_teste.getAreaDeInteresse()
+  else:
+      entrada = f"{nome_inicial}, {idade_inicial}, {area_interesse_inicial}; obter_area_de_interesse()"
+      saida = aluno_teste.obter_area_de_interesse()
+
+  inp_list.append(entrada)
+  out_list.append(saida)
+
+cases = {
+  "input": inp_list,
+  "output": out_list
+}
+
 moodle_cases = json.dumps(cases)
+
 caso0_inp = inp_list[0]
 caso0_out = out_list[0]
-]]
-```</pre>
+]]</pre>
             </div>
         </body>
         </html>

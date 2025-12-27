@@ -2,6 +2,7 @@ import json
 import re
 import os
 import subprocess
+import textwrap
 from graphviz import Digraph
 from datetime import datetime
 
@@ -10,39 +11,37 @@ class QuestionExporter:
     def _get_context(generated_output):
         def_block = re.search(r"\[\[\s*def\s*:(.*?)\]\]", generated_output, re.DOTALL | re.IGNORECASE)
         if not def_block:
+            print("[!] Bloco [[def:]] não encontrado.")
             return None, None
         
         raw_code = def_block.group(1)
-        lines = raw_code.splitlines()
-        if lines:
-            clean_lines = []
-            for line in lines:
-                clean_lines.append(line.rstrip())
-            
-            import textwrap
-            code = textwrap.dedent("\n".join(clean_lines)).strip()
-        else:
-            code = raw_code.strip()
-
+        raw_code = raw_code.strip('\n')
+        clean_code = textwrap.dedent(raw_code)
+        
         context = {
             "random": __import__("random"),
             "json": __import__("json"),
             "datetime": __import__("datetime"),
+            "uuid": __import__("uuid"),
             "nomes_base": ["André", "Beatriz", "Carlos", "Daniela", "Eduardo", "Fernanda"],
             "sobrenomes_base": ["Silva", "Santos", "Oliveira", "Souza", "Costa", "Almeida"]
         }
         
         try:
-            exec(code, context)
-            return context, code
+            exec(clean_code, context)
+            return context, clean_code
         except Exception as e:
             try:
-                aggressive_code = "\n".join([l.lstrip() if not l.startswith(" ") else l for l in raw_code.splitlines()])
-                exec(aggressive_code, context)
-                return context, aggressive_code
+                second_attempt_code = "\n".join(clean_code.splitlines()[1:])
+                exec(second_attempt_code, context)
+                return context, second_attempt_code
             except:
-                print(f"[✗] Erro ao executar contexto Python: {e}")
-                return None, code
+                print(f"\n[✗] Erro persistente no Python gerado pela IA:")
+                print(f"    Erro original: {e}")
+                print("-" * 40)
+                print(clean_code[:500])
+                print("-" * 40)
+                return None, clean_code
 
     @staticmethod
     def export_mctest_json(generated_output, model_name, q_type, filename="mctest_import.json"):
@@ -67,6 +66,11 @@ class QuestionExporter:
 
     @staticmethod
     def export_vpl_cases(generated_output, q_type, filename="questoes.cases"):
+        if q_type == "QM":
+            if os.path.exists(filename):
+                os.remove(filename)
+            return None
+
         if os.path.exists(filename):
             os.remove(filename)
 
@@ -76,18 +80,23 @@ class QuestionExporter:
             print("[!] Aviso: Não foi possível gerar contexto para o arquivo .cases.")
             return None
 
-        if q_type == "QM":
-            return context
-
         inp_list = context.get('inp_list', [])
         out_list = context.get('out_list', [])
+
+        if not inp_list or not out_list:
+            print("[!] Erro: O código Python executou mas não gerou 'inp_list' ou 'out_list'.")
+            return context
 
         with open(filename, 'w', encoding='utf-8') as f:
             for i in range(min(len(inp_list), 5)):
                 f.write(f"case=case{i+1}\n")
-                f.write(f"input={str(inp_list[i]).replace('\\n', ' ')}\n")
-                f.write(f"output={str(out_list[i]).replace('\\n', ' ')}\n\n")
-        
+                
+                entrada_limpa = str(inp_list[i]).replace('\n', ' ')
+                saida_limpa = str(out_list[i]).replace('\n', ' ')
+                
+                f.write(f"input={entrada_limpa}\n")
+                f.write(f"output={saida_limpa}\n\n")
+
         print(f"[✓] Exportado para VPL: {filename}")
         return context
 
@@ -125,7 +134,11 @@ class QuestionExporter:
         for class_name, info in classes_info.items():
             attr_lines = [f"{'-' if a.startswith('_') else '+'} {a}" for a in info['attributes']]
             meth_lines = [f"{'-' if m.startswith('_') else '+'} {m}()" for m in info['methods']]
-            label = f"{{{class_name}|{'\\n'.join(attr_lines)}|{'\\n'.join(meth_lines)}}}"
+            
+            attrs_str = '\\n'.join(attr_lines)
+            meths_str = '\\n'.join(meth_lines)
+            
+            label = f"{{{class_name}|{attrs_str}|{meths_str}}}"
             dot.node(class_name, label)
             if info['parent']: dot.edge(class_name, info['parent'])
         

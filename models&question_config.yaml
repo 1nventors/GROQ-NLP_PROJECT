@@ -53,7 +53,7 @@ original_question: |
   import random
 
   class Aluno:
-      def __init__(self, nome, matricula):
+    def __init__(self, nome, matricula):
         self.__nome = nome
         self.__matricula = matricula
 

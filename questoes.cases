@@ -1,20 +1,20 @@
 case=case1
-input=OfficeJet 8015, 46; setModelo('OfficeJet 8015'); status_impressora()
-output=Modelo: OfficeJet 8015, Folhas restantes: 46
+input=João Silva, 14, Química; getNome()
+output=Química
 
 case=case2
-input=LaserJet Pro, 50; status_impressora()
-output=Modelo: LaserJet Pro, Folhas restantes: 50
+input=Luís Martins, 20, Química; getNome()
+output=20
 
 case=case3
-input=OfficeJet 8015, 37; setModelo('EcoTank L3150'); status_impressora()
-output=Modelo: EcoTank L3150, Folhas restantes: 37
+input=Pedro Andrade, 14, Matemática; setIdade(19); apresentar_jovem_cientista()
+output=Nome: Pedro Andrade, Idade: 19, Área de Interesse: Matemática
 
 case=case4
-input=DeskJet 2700, 48; status_impressora()
-output=Modelo: DeskJet 2700, Folhas restantes: 48
+input=Pedro Costa, 14, Química; setIdade(15); apresentar_jovem_cientista()
+output=Nome: Pedro Costa, Idade: 15, Área de Interesse: Química
 
 case=case5
-input=DeskJet 2700, 30; imprimir(19)
-output=Imprimindo 19 páginas...
+input=Luís Costa, 14, Física; getNome()
+output=14
 

@@ -27,14 +27,16 @@ def detect_question_type(text):
 
 def generate_prompt(question_text, question_type):
     common_instruction = (
-        "É OBRIGATÓRIO incluir ao final da resposta o bloco [[def:...]] contendo o código Python "
+        "É OBRIGATÓRIO incluir ao final da resposta o bloco [[def:...]] contendo o código Python, porém este bloco não deve sair no PDF final."
         "que gera as listas inp_list e out_list para validação no VPL. Não esqueça dos colchetes duplos."
         "gere cerca de 5 casos de teste variados."
+        "Use identação estrita de 4 espaços (NUNCA use tabs). "
+        "Certifique-se que o código Python dentro de [[def:]] esteja alinhado à esquerda (sem indentação inicial relativa ao bloco)."
     )
     if question_type == "QT":
         prompt = f"Reescreva do zero uma questão de POO, mantendo o formato LaTeX, mas usando novos nomes de classe, atributos, métodos, adicionando novos desafios e alterando o tema ficticio da questão. Não gere uma questão parametrizada, gere uma questão nova. Mantenha os exemplos de entrada/saída e o bloco [[def:...]].:\n\n{question_text} {common_instruction}"
     if question_type == "QM":
-        prompt = f"Gere uma nova questão de múltipla escolha no mesmo formato que a seguinte, inclua as alternativas, mas não inclua o gabarito, no formato LaTeX com \\begin{{verbatim}} para código e \\begin{{enumerate}} para alternativas:\n\nQuestão:\n{question_text}{common_instruction}"
+        prompt = f"Gere uma nova questão de múltipla escolha no mesmo formato que a seguinte, inclua 5 alternativas usando \\begin{{enumerate}}, mas NÃO inclua o gabarito no texto. NÃO gere exemplos de entrada e saída no texto. Use o formato LaTeX com \\begin{{verbatim}} para o código da questão e \\begin{{enumerate}} para alternativas:\n\nQuestão:\n{question_text}{common_instruction}"
     return prompt
 
 def generate_with_model(model_name, prompt, temperature, max_tokens):
